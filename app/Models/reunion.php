@@ -14,6 +14,6 @@ class reunion extends Model
     protected $dates = ['created_at', 'updated_at'];
     public function participan()
     {
-        return $this->belongsToMany(participan::class,"reunion_participans")->withPivot('participan_id', 'reunion_id');
+        return $this->belongsToMany(participan::class,"reunion_participans")->withPivot('qrcode','participan_id', 'reunion_id');
     }
 }
