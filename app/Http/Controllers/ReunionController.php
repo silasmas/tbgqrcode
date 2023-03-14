@@ -70,11 +70,12 @@ class ReunionController extends Controller
     public function verify($id)
     {
         $id = explode('.', $id);
-        $retour = reunionParticipan::where([["participan_id", $id[0]], ["reunion_id", $id[0]], ["status", "valide"]])->first();
+        $retour = reunionParticipan::where([["participan_id", $id[0]], ["reunion_id", $id[1]],["status","Valide"]])->first();
+        // dd($retour);
         if ($retour) {
             $participant=participan::find($id[0]);
             $reunion=reunion::find($id[1]);
-            dd($participant);
+            //  dd($participant->nom);
             return view("pages/scanne",compact("participant","reunion"));
         } else {
             dd($retour);

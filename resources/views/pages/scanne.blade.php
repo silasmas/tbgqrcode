@@ -13,11 +13,14 @@
 @section('content')
 <div class="wrapper wrapper-content animated fadeIn">
     <div class="row m-t-lg">
-
         <div class="col-lg-12">
-            <P>{{ $participant->non }}</P>
+            <div class="tabs-container">
+                <h1 >{{ $participant->nom."-".$participant->nom."-".$participant->nom }}</h1>
+                <h3>Accès accordé</h3>
+            </div>
         </div>
     </div>
+</div>
     @endsection
     @section('autres-script')
     <script src="{{ asset('assets/js/bootstrap-markdown/bootstrap-markdown.js') }}"></script>
