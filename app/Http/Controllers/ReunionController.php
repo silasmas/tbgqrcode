@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use split;
 use App\Models\reunion;
+use App\Models\participan;
 use Illuminate\Http\Request;
+use chillerlan\QRCode\QRCode;
 use App\Http\Requests\StorereunionRequest;
 use App\Http\Requests\UpdatereunionRequest;
-use App\Models\participan;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReunionController extends Controller
 {
@@ -22,7 +23,7 @@ class ReunionController extends Controller
     public function viewListe($id)
     {
         $liste=reunion::with("participan")->where('id',$id)->first();
-        //  dd($liste->participan);
+        //   dd($liste);
         return view("pages/liste",compact("liste"));
     }
 
@@ -65,19 +66,30 @@ class ReunionController extends Controller
     public function scanne(){
         return view("pages/scanne");
     }
+    public function verify($id){
+        $id=explode('.',$id);
+    
+        return view("pages/scanne");
+    }
     /**
      * Display the specified resource.
      */
     public function show($id)
     {
 
+        
+        $data="https://tbg.silasmas.com/verify/".$id;
+        // $file->move('storage/qrcode', $filenameImg);
+      //  return (new QRCode)->render($data);
+        echo '<img src="'.(new QRCode)->render($data).'" alt="QR Code" />';
+         //$image= (new QRCode)->render($data);
         // $image=QrCode::size(300)
         // ->format("png")
-        // ->merge('img/t.jpg', 0.1, true)
-        // ->errorCorrection('H')
+        // // ->merge('img/t.jpg', 0.1, true)
+        // // ->errorCorrection('H')
         // ->generate("https://beraca.hardymuanda.com/qreunion.php?reunion=");
 
-        return view('pages/scanne');
+       // return $image;
 
         // $output_file = '/img/qr-code/img-' . time() . '.png';
         // Storage::disk('local')->put($output_file, $image);

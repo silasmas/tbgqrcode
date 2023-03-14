@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('scanne', [ReunionController::class, 'scanne'])->name('scanne');
     Route::get('viewListe/{id}', [ReunionController::class, 'viewListe'])->name('viewListe');
+    Route::get('verify/{id}', [ReunionController::class, 'verify'])->name('verify');
 
     Route::post('/add.reunion', [ReunionController::class, 'store'])->name('add.reunion');
 });

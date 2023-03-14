@@ -37,7 +37,7 @@
                                             <i class="fa fa-whatsapp"></i>
                                             <i class="fa fa-qrcode"></i>
                                         </a>
-                                        <a href="" target="_blank" id="deleteCat" alt='envoyer le QRCODE par mail'
+                                        <a href="{{ route('viewQrcode',["id"=>$i->id.".".$liste->id]) }}" target="_blank" id="deleteCat" alt='envoyer le QRCODE par mail'
                                             class="btn btn-outline btn-danger dim">
                                             <i class="fa fa-download"></i>
                                             <i class="fa fa-qrcode"></i>
