@@ -77,7 +77,7 @@ class ReunionController extends Controller
             dd($participant);
             return view("pages/scanne",compact("participant","reunion"));
         } else {
-
+            dd($retour);
         }
         
     }
