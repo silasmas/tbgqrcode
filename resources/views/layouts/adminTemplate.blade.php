@@ -36,16 +36,18 @@
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
+                        @if (auth()->check())
+                            
                         <div class="dropdown profile-element">
                             <span>
                                 <img alt="image" class="img-circle" src="{{ asset('assets/img/default.png') }}"
                                     width="100" />
                             </span>
-                            {{-- <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">
                                     {{isse(Auth::user()->prenom)?Auth::user()->prenom:"" . '-' .isset( Auth::user()->name)? Auth::user()->name:"" }}</strong>
                                     </span> <span class="text-muted text-xs block">{{ Auth::user()->fonction }} <b
-                                            class="caret"></b></span> </span> </a> --}}
+                                            class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a href="">Profile</a></li>
                                 <li class="divider"></li>
@@ -64,6 +66,7 @@
                         <div class="logo-element">
                             PLA
                         </div>
+                        @endif
                     </li>
                             <li class="{{ Route::current()->getName() == 'dashboard' ? 'active' : '' }}">
                                 <a href="{{ route('dashboard') }}">
