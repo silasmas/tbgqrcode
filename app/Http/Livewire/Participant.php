@@ -62,8 +62,8 @@ class Participant extends Component
     }
     public function store($id){
         if($this->reunion!=""){
-            $retour=reunionParticipan::where("participan_id",$id)->first();
-            dd($retour);
+            $retour=reunionParticipan::where("participan_id",$id)->where("reunion_id",$this->reunion)->get();
+            //dd($retour);
               if($retour){
                   session()->flash('message', 'Ce client est déjà enregistrer pour cet evenement');
                   session()->flash('type', 'warning');

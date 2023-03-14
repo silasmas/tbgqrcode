@@ -12,7 +12,7 @@ class reunionParticipan extends Model
     use HasFactory;
     protected $guarded=[];
     protected $dates=['created_at','updated_at'];
-    protected $table=['reunion_oarticipans'];
+    // protected $table=['reunion_participans'];
     public function reunion()
     {
         return $this->belongsTo(reunion::class);
