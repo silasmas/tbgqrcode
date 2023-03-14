@@ -97,8 +97,7 @@
                         <div class="col-sm-6 form-group ">
                             <label>POSTNOM</label>
                             <input type="text" placeholder="Postnom de la personne"
-                                class="form-control" name='postnom' required aria-required="true"
-                                value="" data-parsley-minlength="2"data-parsley-trigger="change"
+                                class="form-control" name='postnom'
                                 wire:model.defer='postnom'>
                         </div>
                         <div class="col-sm-6 form-group ">

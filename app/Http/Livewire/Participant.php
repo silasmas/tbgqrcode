@@ -98,7 +98,7 @@ class Participant extends Component
                 'prenom' => $this->prenom,
                 'sexe' => $this->sexe,
                 'phone' => $this->phone,
-                'email' => $this->email,
+                'email' => $this->email
             ]);
             if ($client) {
                     session()->flash('message', 'Enregistrement réussit');

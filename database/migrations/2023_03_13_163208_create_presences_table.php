@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
-            $table->string('jour')->nullable();
-            $table->text('description')->nullable();
+            $table->date('jour')->nullable();
+            $table->foreignId('participan_id')->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+        $table->foreignId('reunion_id')->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
