@@ -1,4 +1,4 @@
-@extends('layouts.adminTemplate',['titre'=>"Marquer la présence"])
+@extends('layouts.tamplate',['titre'=>"Marquer la présence"])
 @section('autres_style')
 <link href="{{asset('assets/css/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/chosen/bootstrap-chosen.css') }}">
