@@ -31,7 +31,7 @@
                                             <i class="fa fa-envelope"></i>
                                             <i class="fa fa-qrcode"></i>
                                         </a>
-                                       <div hidden> {{ $msg="Ceci est votre billet d'entré dans la conférence *$liste->titre*, cela est confidentiel prière n'est pas le partager" }}</div>
+                                       <div hidden> {{ $msg=$i->nom."-".$i->prenom." Ceci est votre billet d'entré dans la conférence *$liste->titre*, cela est confidentiel prière n'est pas le partager" }}</div>
                                         <a href="https://api.whatsapp.com/send?phone={{$i->phone}}&text={{$msg}}&source&data=" target="_blank"alt='envoyer le QRCODE par whatsapp'
                                             class="btn btn-outline btn-primary dim">
                                             <i class="fa fa-whatsapp"></i>

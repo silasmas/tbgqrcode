@@ -41,8 +41,8 @@ class Participant extends Component
     }
     public function updatedClient()
     {
-
-        $this->tab = participan::where("phone", "LIKE", "{$this->client}")
+        $cl=trim($this->client);
+        $this->tab = participan::where("phone", "LIKE", "{$cl}")
             ->orWhere("email", "LIKE", "{$this->client}")
             ->first();
 
