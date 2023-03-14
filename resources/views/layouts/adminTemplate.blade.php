@@ -41,12 +41,11 @@
                                 <img alt="image" class="img-circle" src="{{ asset('assets/img/default.png') }}"
                                     width="100" />
                             </span>
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                {{-- <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">
-                                    {{
-                                            isse(Auth::user()->prenom)?Auth::user()->prenom:"" . '-' .isset( Auth::user()->name)? Auth::user()->name:"" }}</strong> --}}
+                            {{-- <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">
+                                    {{isse(Auth::user()->prenom)?Auth::user()->prenom:"" . '-' .isset( Auth::user()->name)? Auth::user()->name:"" }}</strong>
                                     </span> <span class="text-muted text-xs block">{{ Auth::user()->fonction }} <b
-                                            class="caret"></b></span> </span> </a>
+                                            class="caret"></b></span> </span> </a> --}}
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a href="">Profile</a></li>
                                 <li class="divider"></li>
