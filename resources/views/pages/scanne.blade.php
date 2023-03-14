@@ -15,11 +15,7 @@
     <div class="row m-t-lg">
 
         <div class="col-lg-12">
-            {{-- {{ QRcode::png("https://beraca.hardymuanda.com/qreunion.php?reunion=1") }} --}}
-{{-- <img src="data:image/png;base64,{{ base64_encode(QrCode::size(300)->format("png")
-        ->format("png")
-        ->merge("{{ asset('assets/img/logo.png') }}", 0.1, true)
-    ->generate("https://beraca.hardymuanda.com/qreunion.php?reunion=1")) }}" alt="" srcset=""> --}}
+            <P>{{ $participant->non }}</P>
         </div>
     </div>
     @endsection

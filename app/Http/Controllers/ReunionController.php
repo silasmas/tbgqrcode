@@ -74,7 +74,7 @@ class ReunionController extends Controller
         if ($retour) {
             $participant=participan::find($id[0]);
             $reunion=reunion::find($id[1]);
-            return view("pages/scanne");
+            return view("pages/scanne",compact("participant","reunion"));
         } else {
 
         }
