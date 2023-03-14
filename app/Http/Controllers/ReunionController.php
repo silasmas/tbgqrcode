@@ -7,6 +7,7 @@ use App\Models\reunion;
 use App\Models\participan;
 use Illuminate\Http\Request;
 use chillerlan\QRCode\QRCode;
+use App\Models\reunionParticipan;
 use App\Http\Requests\StorereunionRequest;
 use App\Http\Requests\UpdatereunionRequest;
 
@@ -68,7 +69,12 @@ class ReunionController extends Controller
     }
     public function verify($id){
         $id=explode('.',$id);
+        $retour=reunionParticipan::where([["participan_id",$id[0]],["reunion_id",$id[0]],["status","valide"]])->first();
+if($retour){
+
+}else{
     
+}
         return view("pages/scanne");
     }
     /**
