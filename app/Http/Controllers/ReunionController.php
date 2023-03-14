@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatereunionRequest;
 use App\Models\participan;
+use App\Models\presence;
 use App\Models\reunion;
 use App\Models\reunionParticipan;
 use chillerlan\QRCode\QRCode;
@@ -70,17 +71,31 @@ class ReunionController extends Controller
     public function verify($id)
     {
         $id = explode('.', $id);
-        $retour = reunionParticipan::where([["participan_id", $id[0]], ["reunion_id", $id[1]],["status","Valide"]])->first();
+        $retour = reunionParticipan::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["status", "Valide"]])->first();
         // dd($retour);
         if ($retour) {
-            $participant=participan::find($id[0]);
-            $reunion=reunion::find($id[1]);
-            //  dd($participant->nom);
-            return view("pages/scanne",compact("participant","reunion"));
+            $p = presence::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["etat", "present"]])->first();
+            if ($p) {
+                
+                $participant = participan::find($id[0]);
+                $reunion = reunion::find($id[1]);
+                $msg="A déjà eu accès la conférence $reunion->titre";
+                return view("pages/scanne", compact("participant", "reunion","msg"));
+            } else {
+                presence::create([
+                    'jour' => NOW(),
+                    'participan_id' => $id[0],
+                    'reunion_id' => $id[1],
+                ]);
+                $participant = participan::find($id[0]);
+                $reunion = reunion::find($id[1]);
+                $msg="Accès accordé à la réunion $reunion->titre";
+                return view("pages/scanne", compact("participant", "reunion","msg"));
+            }
         } else {
             dd($retour);
         }
-        
+
     }
     /**
      * Display the specified resource.

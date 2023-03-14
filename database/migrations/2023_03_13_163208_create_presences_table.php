@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
             $table->date('jour')->nullable();
+            $table->string('etat')->default("present");
             $table->foreignId('participan_id')->constrained()->onUpdate('cascade')
             ->onDelete('cascade');
         $table->foreignId('reunion_id')->constrained()->onUpdate('cascade')

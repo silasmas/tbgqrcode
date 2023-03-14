@@ -15,8 +15,8 @@
     <div class="row m-t-lg">
         <div class="col-lg-12">
             <div class="tabs-container">
-                <h1 >{{ $participant->nom."-".$participant->nom."-".$participant->nom }}</h1>
-                <h3>Accès accordé</h3>
+                <h1 >{{ $participant->prenom."-".$participant->nom }}</h1>
+                <h3 class="text-success">{{ $msg }}</h3>
             </div>
         </div>
     </div>
