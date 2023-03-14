@@ -43,7 +43,7 @@
                             </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{
-                                            Auth::user()->prenom . '-' . Auth::user()->name }}</strong>
+                                            isse(Auth::user()->prenom)?Auth::user()->prenom:"" . '-' .isset( Auth::user()->name)? Auth::user()->name:"" }}</strong>
                                     </span> <span class="text-muted text-xs block">{{ Auth::user()->fonction }} <b
                                             class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
