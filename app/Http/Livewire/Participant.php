@@ -194,7 +194,7 @@ class Participant extends Component
 
     public function render()
     {
-        $reunions=reunion::where([["status","Ouvert"],["date_fin",">",NOW()]])->get();
+        $reunions=reunion::where([["status","Ouvert"],["date_fin",">",NOW()+1]])->get();
         return view('livewire.participant',compact('reunions'));
     }
 }
