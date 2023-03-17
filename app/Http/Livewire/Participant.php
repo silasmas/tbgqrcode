@@ -41,12 +41,12 @@ class Participant extends Component
     }
     public function updatedClient()
     {
-        $cl=trim($this->client);
+        $cl = trim($this->client);
         $this->tab = participan::where("phone", "LIKE", "{$cl}")
             ->orWhere("email", "LIKE", "{$this->client}")
             ->first();
 
-            // dd($this->tab);
+        // dd($this->tab);
         if ($this->tab) {
             $this->existe = false;
             $this->ids = $this->tab->id;
@@ -60,32 +60,33 @@ class Participant extends Component
 
         return $this->tab;
     }
-    public function store($id){
-        if($this->reunion!=""){
+    public function store($id)
+    {
+        if ($this->reunion != "") {
             //dd($this->reunion);
-            $retour=reunionParticipan::where([["participan_id",$id],["reunion_id",$this->reunion]])->first();
-              if($retour){
-                  session()->flash('message', 'Ce client est déjà enregistrer pour cet evenement');
-                  session()->flash('type', 'warning');
-              }else{
-                  $qrinfo = reunionParticipan::create([
-                          'participan_id' => $id,
-                          'reunion_id' => $this->reunion,
-                      ]);
-                      session()->flash('message', 'Enregistrement réussit');
-                          session()->flash('type', 'success');
-                          session()->flash('qrcode', $qrinfo->id);
-                          $this->vider();
-              }
-        }else{
+            $retour = reunionParticipan::where([["participan_id", $id], ["reunion_id", $this->reunion]])->first();
+            if ($retour) {
+                session()->flash('message', 'Ce client est déjà enregistrer pour cet evenement');
+                session()->flash('type', 'warning');
+            } else {
+                $qrinfo = reunionParticipan::create([
+                    'participan_id' => $id,
+                    'reunion_id' => $this->reunion,
+                ]);
+                session()->flash('message', 'Enregistrement réussit');
+                session()->flash('type', 'success');
+                session()->flash('qrcode', $qrinfo->id);
+                $this->vider();
+            }
+        } else {
             session()->flash('message', 'Aucune réunion selectionée');
-                  session()->flash('type', 'danger');
+            session()->flash('type', 'danger');
         }
     }
     protected $rules = [
         'nom' => 'required',
-        'phone' => 'unique:'.participan::class,
-        'email' => 'unique:'.participan::class,
+        'phone' => 'unique:' . participan::class,
+        'email' => 'unique:' . participan::class,
     ];
     public function saveClient()
     {
@@ -98,10 +99,10 @@ class Participant extends Component
                 'prenom' => $this->prenom,
                 'sexe' => $this->sexe,
                 'phone' => $this->phone,
-                'email' => $this->email
+                'email' => $this->email,
             ]);
             if ($client) {
-                    session()->flash('message', 'Enregistrement réussit');
+                session()->flash('message', 'Enregistrement réussit');
                 session()->flash('type', 'success');
                 $this->vider();
 
@@ -111,7 +112,7 @@ class Participant extends Component
             }
         } else {
             $cl = participan::find($this->ids);
-          // dd($this->nom);
+            // dd($this->nom);
             if ($cl) {
                 $cl->nom = $this->nom;
                 $cl->postnom = $this->postnom;
@@ -194,7 +195,10 @@ class Participant extends Component
 
     public function render()
     {
-        $reunions=reunion::where([["status","Ouvert"],["date_fin",">",NOW()]])->get();
-        return view('livewire.participant',compact('reunions'));
+        //dd(today());
+        $reunions = reunion::where([["status", "Ouvert"], ["date_fin", ">", now()]])
+            ->get();
+        //dd($reunions);
+        return view('livewire.participant', compact('reunions'));
     }
 }
