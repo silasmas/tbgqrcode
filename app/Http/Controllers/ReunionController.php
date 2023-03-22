@@ -106,8 +106,8 @@ class ReunionController extends Controller
 
         $data = "https://tbg.silasmas.com/verify/" . $id;
         $image = QrCode::size(300)->format("png")->merge('https://plaafricalaw.com/public/assets/img/logo.png', 0.1, true)
-            ->generate("https://beraca.hardymuanda.com/qreunion.php?reunion=");
-        echo '<img src="' . $image . '" alt="QR Code" />';
+            ->generate("$data");
+        // echo '<img src="' . $image . '" alt="QR Code" />';
 
 
         // $image = QrCode::size(300)->format("png")->merge('', 1, true)
