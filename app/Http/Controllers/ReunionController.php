@@ -104,7 +104,7 @@ class ReunionController extends Controller
     {
 
         $data = "https://tbg.silasmas.com/verify/" . $id;
-        $image = QrCode::size(300)->format("png")->merge('https://tbg.silasmas.com/public/assets/img/logo.png', 0.1, true)
+        $image = QrCode::size(300)->format("png")->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.1, true)
             ->generate("$data");
         // echo '<img src="' . $image . '" alt="QR Code" />';
 
