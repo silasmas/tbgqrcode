@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdatereunionRequest;
-use App\Models\participan;
-use App\Models\presence;
 use App\Models\reunion;
-use App\Models\reunionParticipan;
-use chillerlan\QRCode\QRCode;
+use App\Models\presence;
+use App\Models\participan;
 use Illuminate\Http\Request;
+use chillerlan\QRCode\QRCode;
+use App\Models\reunionParticipan;
+use App\Http\Requests\UpdatereunionRequest;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReunionController extends Controller
 {
@@ -76,11 +77,11 @@ class ReunionController extends Controller
         if ($retour) {
             $p = presence::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["etat", "present"]])->first();
             if ($p) {
-                
+
                 $participant = participan::find($id[0]);
                 $reunion = reunion::find($id[1]);
-                $msg="A déjà eu accès la conférence $reunion->titre";
-                return view("pages/scanne", compact("participant", "reunion","msg"));
+                $msg = "A déjà eu accès la conférence $reunion->titre";
+                return view("pages/scanne", compact("participant", "reunion", "msg"));
             } else {
                 presence::create([
                     'jour' => NOW(),
@@ -89,8 +90,8 @@ class ReunionController extends Controller
                 ]);
                 $participant = participan::find($id[0]);
                 $reunion = reunion::find($id[1]);
-                $msg="Accès accordé à la réunion $reunion->titre";
-                return view("pages/scanne", compact("participant", "reunion","msg"));
+                $msg = "Accès accordé à la réunion $reunion->titre";
+                return view("pages/scanne", compact("participant", "reunion", "msg"));
             }
         } else {
             dd($retour);
@@ -104,20 +105,16 @@ class ReunionController extends Controller
     {
 
         $data = "https://tbg.silasmas.com/verify/" . $id;
-        // $file->move('storage/qrcode', $filenameImg);
-        //  return (new QRCode)->render($data);
-        echo '<img src="' . (new QRCode)->render($data) . '" alt="QR Code" />';
-        //$image= (new QRCode)->render($data);
-        // $image=QrCode::size(300)
-        // ->format("png")
-        // // ->merge('img/t.jpg', 0.1, true)
-        // // ->errorCorrection('H')
-        // ->generate("https://beraca.hardymuanda.com/qreunion.php?reunion=");
+        $image = QrCode::size(300)->format("png")->merge('https://plaafricalaw.com/public/assets/img/logo.png', 0.1, true)
+            ->generate("https://beraca.hardymuanda.com/qreunion.php?reunion=");
+        echo '<img src="' . $image . '" alt="QR Code" />';
 
-        // return $image;
 
-        // $output_file = '/img/qr-code/img-' . time() . '.png';
-        // Storage::disk('local')->put($output_file, $image);
+        // $image = QrCode::size(300)->format("png")->merge('', 1, true)
+        //     ->generate("https://beraca.hardymuanda.com/qreunion.php?reunion=".$req);
+           // $image->move('storage/qr/', $image);
+
+         echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
     }
 
     /**
