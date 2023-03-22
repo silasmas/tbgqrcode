@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\reunion;
-use App\Models\presence;
-use App\Models\participan;
-use Illuminate\Http\Request;
-use chillerlan\QRCode\QRCode;
-use App\Models\reunionParticipan;
 use App\Http\Requests\UpdatereunionRequest;
+use App\Models\participan;
+use App\Models\presence;
+use App\Models\reunion;
+use App\Models\reunionParticipan;
+use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReunionController extends Controller
@@ -109,12 +108,11 @@ class ReunionController extends Controller
             ->generate("$data");
         // echo '<img src="' . $image . '" alt="QR Code" />';
 
-
         // $image = QrCode::size(300)->format("png")->merge('', 1, true)
         //     ->generate("https://beraca.hardymuanda.com/qreunion.php?reunion=".$req);
-           // $image->move('storage/qr/', $image);
+        // $image->move('storage/qr/', $image);
 
-         echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
+        echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
     }
 
     /**
