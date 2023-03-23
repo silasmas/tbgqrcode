@@ -104,14 +104,9 @@ class ReunionController extends Controller
     {
 
         $data = "https://tbg.silasmas.com/verify/" . $id;
-        $image = QrCode::size(300)->format("png")->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.1, true)
+        $image = QrCode::size(300)->format("png")
+            ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.3, true)
             ->generate("$data");
-        // echo '<img src="' . $image . '" alt="QR Code" />';
-
-        // $image = QrCode::size(300)->format("png")->merge('', 1, true)
-        //     ->generate("https://beraca.hardymuanda.com/qreunion.php?reunion=".$req);
-        // $image->move('storage/qr/', $image);
-
         echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
     }
 
