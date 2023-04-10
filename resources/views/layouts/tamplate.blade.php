@@ -11,12 +11,12 @@
     <title>{{ config('app.name') }} | {{ isset($titre) ? $titre : '' }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Scripts -->
-    <script src="{{ asset('assets/admin/js/app.js') }}" defer></script>
+    <script src="{{ asset('assets/js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="icon" href="{{ asset('assets/img/favicon/android-icon-192x192.png') }}" type="image/rdp-icon">
+    {{-- <link rel="icon" href="{{ asset('assets/img/favicon/android-icon-192x192.png') }}" type="image/rdp-icon"> --}}
 
     <!-- Styles -->
 
@@ -35,23 +35,23 @@
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
-                    
+
                             <li class="{{ Route::current()->getName() == 'dashboard' ? 'active' : '' }}">
                                 <a href="{{ route('dashboard') }}">
                                     <span class="nav-label">Accueil</span></a>
                             </li>
                             <li class="{{ Route::current()->getName() == 'reunion' ? 'active' : '' }}"> <a
-                                    href="{{ route('reunion') }}"><span class="nav-label">Réunion</span></a>
+                                    href="{{ route('reunion') }}"><span class="nav-label">Réunion & Participants</span></a>
                             </li>
-                            <li class="{{ Route::current()->getName() == 'participan' ? 'active' : '' }}">
+                            {{-- <li class="{{ Route::current()->getName() == 'participan' ? 'active' : '' }}">
                                 <a href="{{ route('participan') }}">Participans</a>
-                            </li>
+                            </li> --}}
                             {{-- <li class="{{ Route::current()->getName() == 'G_carthographie' ? 'active' : '' }}">
                                 <a href="{{ route('G_carthographie') }}">Users</a>
                             </li> --}}
-                            <li class="{{ Route::current()->getName() == 'scanner' ? 'active' : '' }}">
+                            {{-- <li class="{{ Route::current()->getName() == 'scanner' ? 'active' : '' }}">
                                 <a href="{{ route('scanne') }}">Scanner</a>
-                            </li>
+                            </li> --}}
                             <li class="{{ Route::current()->getName() == 'agent' ? 'active' : '' }}">
                                 <a href="{{ route('agent') }}">Users</a>
                             </li>

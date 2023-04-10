@@ -1,4 +1,4 @@
-@extends('layouts.adminTemplate', ['titre' => 'Liste des participants'])
+@extends('layouts.adminTemplate', ['titre' => isset($listePart)?'Détails participant':'Liste des participants'])
 @section('autres_style')
     <link href="{{ asset('assets/css/dataTables/datatables.min.cs') }}" rel="stylesheet">
 @endsection
@@ -8,11 +8,51 @@
         <div class="row animated fadeInRight">
             <div class="panel-body">
                 <div class="table-responsive">
+                    @if (isset($listePart))
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Image</th>
+                                <th>Theme</th>
+                                <th>type</th>
+                                <th>Contexte</th>
+                                <th>Présence</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($liste->reunion as $i)
+                                <tr class="gradeX">
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td><img src="{{ asset('storage/'.$i->image) }}" alt=""
+                                        class="img-fluid" height="100" width="100"></td>
+                                    <td>{{ $i->titre}}</td>
+                                    <td>{{ $i->type}}</td>
+                                    <td>{{ $i->context }}</td>   
+                                    <td>{{ $i->pivot->status=="valide"?"Présent":"Absent" }}</td>   
+                                @empty
+                            @endforelse
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>Image</th>
+                                <th>Theme</th>
+                                <th>type</th>
+                                <th>Contexte</th>
+                                <th>Présence</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    @else
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>NOM & PRENOM</th>
+                                <th>SEXE</th>
                                 <th>TELEPHONE</th>
                                 <th>Email</th>
                                 <th>Options d'enoi du QRCODE</th>
@@ -23,8 +63,10 @@
                                 <tr class="gradeX">
                                     <td>{{ $loop->index }}</td>
                                     <td>{{ $i->nom." ".$i->prenom}}</td>
+                                    <td>{{ $i->sexe}}</td>
                                     <td>{{ $i->phone }}</td>
                                     <td>{{ $i->email }}</td>
+                                    @if ($i->date_fin > now())
                                     <td class="center">
                                         <a href="mailto:secretaire@actiondamien-rdc.org" target="_blank" id="deleteCat" alt='envoyer le QRCODE par mail'
                                             class="btn btn-outline btn-warning dim">
@@ -42,6 +84,12 @@
                                             <i class="fa fa-download"></i>
                                             <i class="fa fa-qrcode"></i>
                                     </td>
+                                    @else
+                                    <td class="center">
+                                    <span class="label label-danger">Cette réunion est déjà passée,partage de billet d'accès bloquer</span>
+                                                                                        </td>
+                                    @endif
+
 
                                 @empty
                             @endforelse
@@ -52,12 +100,15 @@
                             <tr>
                                 <th>#</th>
                                 <th>NOM & PRENOM</th>
+                                <th>SEXE</th>
                                 <th>TELEPHONE</th>
                                 <th>Email</th>
                                 <th>Options</th>
                             </tr>
                         </tfoot>
                     </table>
+                    @endif
+                    
                 </div>
             </div>
 

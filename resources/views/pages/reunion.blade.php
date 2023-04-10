@@ -31,13 +31,13 @@
                             <span class="label label-warning">Formulaire</span>
                         </a>
                     </li>
-                    <li class=""><a data-toggle="tab" href="#tab-listeReunion">
-                            Liste des prochaines réunions
+                    <li class=""><a data-toggle="tab" href="#tab-futurReunion">
+                            Liste des réunions
                             <span class="label label-warning"></span>
                         </a>
                     </li>
-                    <li class=""><a data-toggle="tab" href="#tab-galerie">
-                            Liste de toutes les réunions
+                    <li class=""><a data-toggle="tab" href="#tab-participants">
+                            Liste des participants
                             <span class="label label-warning"></span>
                         </a>
                     </li>
@@ -60,9 +60,8 @@
                                         <div class='row'>
                                             <div class=" col-lg-12 col-sm-12">
                                                 <form method="POST" class="form-group"
-                                                action="{{route('add.reunion') }}" enctype="multipart/form-data" data-parsley-validate>
+                                                        action="{{route('add.reunion') }}" enctype="multipart/form-data" data-parsley-validate>
                                                     @csrf
-
                                                     <div class="row">
                                                         <div class="col-lg-6 form-group ">
                                                             <label>Titre </label>
@@ -132,7 +131,6 @@
                                                                     data-dismiss="fileinput">Supprimer</a>
                                                             </div>
                                                         </div>
-                                                        </div>
                                                         <div class="col-lg-offset-3 col-lg-6 col-sm-12 form-group">
                                                             <div class="col-sm-offset-4 col-sm-5">
                                                                 <button class="ladda-button btn btn-sm btn-primary"
@@ -149,7 +147,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="tab-listeReunion">
+                    <div class="tab-pane" id="tab-futurReunion">
                         <div class="panel-body">
                             <div class="ibox-title">
                                 <h5>Cette page affiche toutes les réunions future </h5>
@@ -157,11 +155,33 @@
                             <div class="ibox-content">
                                 <div class='row'>
                                     <div class=" col-lg-12 col-sm-12">
-
                                         <div class="full-height-scroll">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        @forelse ($reunions as $t)
+                                                        <tr>
+                                                        <td><a data-toggle="tab" href="#"
+                                                                class="client-link">{{ $t->titre }}</a></td>
+                                                        <td> {{ $t->subtitre }}</td>
+                                                        <td class="contact-type"><i class="fa fa-clock"> </i>
+                                                        </td>
+                                                        <td>{{ $t->type }}</td>
+                                                        <td>{{ $t->context }}</td>
+                                                        <td><span class="label label-info">Participant(s) : {{ $t->participan->count() }}</span></td>
+                                                        <td class="client-status text-center">
+                                                            <span class="label {{ $t->date_fin> now()?"label-primary":"label-danger" }}">Date {{ $t->date_fin> now()?$t->date_debut :"La réunion est déjà passée"}}</span>
+                                                        </td>
+                                                        <td class="client-status text-center">
+                                                        <a href="{{ route('viewListe',['id'=>$t->id]) }}"
+                                                        class="btn btn-xs btn-outline btn-primary">Liste des participants</a>
+                                                        </td>
 
+                                                    </tr>
+                                                  @empty
+                                                       <span class="label label-danger">Aucune reunion en vue</span>
+                                                  @endforelse
+                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>
@@ -170,75 +190,40 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="tab-galerie">
-                        {{-- <div class="panel-body">
+                    <div class="tab-pane" id="tab-participants">
+                        <div class="panel-body">
                             <div class="ibox-title">
-                                <h5>Cette page affiche toutes les réunions</h5>
+                                <h5>Cette page affiche toutes les réunions future </h5>
                             </div>
                             <div class="ibox-content">
                                 <div class='row'>
                                     <div class=" col-lg-12 col-sm-12">
-
                                         <div class="full-height-scroll">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-hover">
                                                     <tbody>
+                                                        @forelse ($participan as $t)
+                                                        <tr>
+                                                        <td><a data-toggle="tab" href="#"
+                                                                class="client-link">{{ $t->nom." ".$t->prenom." ".$t->postnom }}</a></td>
+                                                        <td> {{ $t->sexe }}</td>
+                                                        <td class="contact-type"><i class="fa fa-clock"> </i>
+                                                        </td>
+                                                        <td>{{ $t->phone }}</td>
+                                                        <td>{{ $t->email }}</td>
+                                                        <td><span class="label label-info">Réunion(s) : {{ $t->reunion->count() }}</span></td>
+                                                        {{-- <td class="client-status text-center">
+                                                            <span class="label {{ $t->date_fin> now()?"label-primary":"label-danger" }}">Date {{ $t->date_fin> now()?$t->date_debut :"La réunion est déjà passée"}}</span>
+                                                        </td> --}}
+                                                        <td class="client-status text-center">
+                                                        <a href="{{ route('viewListeReunion',['id'=>$t->id]) }}"
+                                                        class="btn btn-xs btn-outline btn-primary">Liste des réunions participée</a>
+                                                        </td>
 
-                                                                        if (!allreunion()) {
-                                                                            echo '<span
-                                                                                class="label label-danger">Aucune reunion en vue</span>';
-                                                                        } else {
-                                                            foreach (allreunion() as $t) {
-                                                                                                                <tr>
-                                                                                                                    <td><a data-toggle="tab" href="#" class="client-link">
-
-                                                                                                                        </a></td>
-                                                                                                                    <td>
-
-                                                                switch ($t['type']) {
-                                                                    case 0:
-                                                                        echo '<span
-                                                                                class="label label-danger">Retirer</span>';
-                                                                        break;
-                                                                    case 1:
-                                                                        echo '<span
-                                                                                class="label label-warning">En attente</span>';
-                                                                        break;
-
-                                                                    default:
-                                                                        echo '<span
-                                                                                class="label label-success">Publier</span>';
-                                                                        break;
-                                                                }
-                                                                ?>
-                                                            </td>
-                                                            <td class="contact-type"><i class="fa fa-clock"> </i>
-                                                            </td>
-                                                            <td>
-
-                                                            </td>
-                                                            <td>
-
-                                                            </td>
-                                                            <td class="client-status text-center"><span
-                                                                    class="label label-primary">Date
-                                                                    :
-
-                                                                </span>
-                                                            </td>
-                                                            <td>
-                                                                <button
-                                                                    onclick="supprimer('controller/C_reunion.php',this.title)"
-                                                                    title=""
-                                                                    class="btn btn-xs btn-outline btn-danger">Supprimer
-                                                                    <i class="fa fa-trash"></i> </button>
-                                                            </td>
-
-                                                        </tr>
-
-
-
-
+                                                    </tr>
+                                                  @empty
+                                                       <span class="label label-danger">Aucune reunion en vue</span>
+                                                  @endforelse
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -246,7 +231,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>

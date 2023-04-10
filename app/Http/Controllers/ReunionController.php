@@ -17,14 +17,24 @@ class ReunionController extends Controller
      */
     public function index()
     {
-
-        return view("pages/reunion");
+        $freunions = reunion::where([["status", "Ouvert"], ["date_fin", ">", now()]])->with("participan")->get();
+        $reunions = reunion::with("participan")->get();
+        $participan = participan::with("reunion")->get();
+       
+        return view("pages/reunion", compact("reunions", "freunions","participan"));
     }
     public function viewListe($id)
     {
         $liste = reunion::with("participan")->where('id', $id)->first();
-        //   dd($liste);
+
         return view("pages/liste", compact("liste"));
+    }
+    public function viewListeReunion($id)
+    {
+        $liste = participan::with("reunion")->where('id', $id)->first();
+        $listePart=true;
+// dd($liste->reunion);
+        return view("pages/liste", compact("liste","listePart"));
     }
 
     /**

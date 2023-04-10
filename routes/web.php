@@ -29,12 +29,13 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('viewListe/{id}', [ReunionController::class, 'viewListe'])->name('viewListe');
+    Route::get('viewListeReunion/{id}', [ReunionController::class, 'viewListeReunion'])->name('viewListeReunion');
 
     Route::post('/add.reunion', [ReunionController::class, 'store'])->name('add.reunion');
 });
 
 Route::get('/dashboard', function () {
-    $reunionns=reunion::where([["status","Ouvert"],["date_fin",">",NOW()]])->get();
+    $reunionns=reunion::where([["status","Ouvert"],["date_fin",">",NOW()]])->with("participan")->get();
     return view('dashboard',compact('reunionns'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 

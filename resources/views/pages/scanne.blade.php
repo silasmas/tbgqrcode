@@ -15,8 +15,8 @@
     <div class="row m-t-lg">
         <div class="col-lg-12">
             <div class="tabs-container">
-                <h1 >{{ $participant->prenom."-".$participant->nom }}</h1>
-                <h3 class="text-success">{{ $msg }}</h3>
+                <h3>Video scanne</h3>
+                <video id="preview"></video>
             </div>
         </div>
     </div>
@@ -30,11 +30,23 @@
     <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/js/jasny/jasny-bootstrap.min.js') }}"></script>
 
-
-    <script src="{{ asset('assets/js/parsley/js/parsley.js') }}"></script>
-    <script src="{{ asset('assets/js/parsley/i18n/fr.js') }}"></script>
+    <script src="{{ asset('assets/js/instascan.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
-
+    <script type="text/javascript">
+        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+        scanner.addListener('scan', function (content) {
+          console.log(content);
+        });
+        Instascan.Camera.getCameras().then(function (cameras) {
+          if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+          } else {
+            console.error('No cameras found.');
+          }
+        }).catch(function (e) {
+          console.error(e);
+        });
+      </script>
     @endsection

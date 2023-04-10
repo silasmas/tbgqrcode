@@ -73,17 +73,17 @@
                                     <span class="nav-label">Accueil</span></a>
                             </li>
                             <li class="{{ Route::current()->getName() == 'reunion' ? 'active' : '' }}"> <a
-                                    href="{{ route('reunion') }}"><span class="nav-label">Réunion</span></a>
+                                    href="{{ route('reunion') }}"><span class="nav-label">Réunion & Participans</span></a>
                             </li>
-                            <li class="{{ Route::current()->getName() == 'participan' ? 'active' : '' }}">
+                             {{--<li class="{{ Route::current()->getName() == 'participan' ? 'active' : '' }}">
                                 <a href="{{ route('participan') }}">Participans</a>
                             </li>
-                            {{-- <li class="{{ Route::current()->getName() == 'G_carthographie' ? 'active' : '' }}">
+                            <li class="{{ Route::current()->getName() == 'G_carthographie' ? 'active' : '' }}">
                                 <a href="{{ route('G_carthographie') }}">Users</a>
-                            </li> --}}
+                            </li> 
                             <li class="{{ Route::current()->getName() == 'scanner' ? 'active' : '' }}">
                                 <a href="{{ route('scanne') }}">Scanner</a>
-                            </li>
+                            </li>--}}
                             <li class="{{ Route::current()->getName() == 'agent' ? 'active' : '' }}">
                                 <a href="{{ route('agent') }}">Users</a>
                             </li>

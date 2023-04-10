@@ -51,14 +51,8 @@
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-hover">
                                                     <tbody>
-                                                        <?php
-                                                        if (!$reunionns) {
-                                                            echo '<span
-                                                                   class="label label-danger">Aucune reunion en vue</span>';
-                                                        } else {
-
-                                                        foreach ($reunionns as $t) {  ?>
-                                                        <tr>
+                                                      @forelse ($reunionns as $t)
+                                                            <tr>
                                                             <td><a data-toggle="tab" href="#"
                                                                     class="client-link">{{ $t->titre }}</a></td>
                                                             <td> {{ $t->subtitre }}</td>
@@ -66,6 +60,7 @@
                                                             </td>
                                                             <td>{{ $t->type }}</td>
                                                             <td>{{ $t->context }}</td>
+                                                            <td><span class="label label-info">Participant(s) : {{ $t->participan->count() }}</span></td>
                                                             <td class="client-status text-center"><span
                                                                     class="label label-primary">Date {{ $t->date_debut }}</span>
                                                             </td>
@@ -73,22 +68,12 @@
                                                             <a href="{{ route('viewListe',['id'=>$t->id]) }}"
                                                             class="btn btn-xs btn-outline btn-primary">Liste des participants</a>
                                                             </td>
-                                                            {{-- <td class="m-t text-righ">
-                                                                <select class="" id="" required aria-required="true"
-                                                                    title=""
-                                                                    onchange="changerEtat('controller/C_reunion.php',this.title,this.value)"
-                                                                    class="validate" data-parsley-trigger="change"
-                                                                    name="type">
-                                                                    <option value="" disabled selected>Selectionnez un
-                                                                        etat
-                                                                    </option>
-                                                                    <option value="2">Publier</option>
-                                                                    <option value="1">En atente</option>
-                                                                    <option value="0">Rétirer</option>
-                                                                </select>
-                                                            </td> --}}
+
                                                         </tr>
-                                                        <?php } } ?>
+                                                      @empty
+                                                           <span class="label label-danger">Aucune reunion en vue</span>
+                                                      @endforelse
+
 
 
                                                     </tbody>
@@ -191,6 +176,7 @@
     <script src="{{ asset('assets/js/chosen/chosen.jquery.js') }}"></script>
     <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/js/jasny/jasny-bootstrap.min.js') }}"></script>
+
 
 
     <script src="{{ asset('assets/js/parsley/js/parsley.js') }}"></script>

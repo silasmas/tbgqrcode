@@ -17,7 +17,7 @@ class participan extends Model
 
     public function reunion()
     {
-        return $this->belongsToMany(reunion::class,"reunion_participans")->withPivot('participan_id', 'reunion_id');
+        return $this->belongsToMany(reunion::class,"reunion_participans")->withPivot('status','participan_id', 'reunion_id');
     }
     public function user()
     {
