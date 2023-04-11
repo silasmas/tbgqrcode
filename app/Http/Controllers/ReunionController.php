@@ -20,8 +20,8 @@ class ReunionController extends Controller
         $freunions = reunion::where([["status", "Ouvert"], ["date_fin", ">", now()]])->with("participan")->get();
         $reunions = reunion::with("participan")->get();
         $participan = participan::with("reunion")->get();
-       
-        return view("pages/reunion", compact("reunions", "freunions","participan"));
+
+        return view("pages/reunion", compact("reunions", "freunions", "participan"));
     }
     public function viewListe($id)
     {
@@ -32,9 +32,9 @@ class ReunionController extends Controller
     public function viewListeReunion($id)
     {
         $liste = participan::with("reunion")->where('id', $id)->first();
-        $listePart=true;
+        $listePart = true;
 // dd($liste->reunion);
-        return view("pages/liste", compact("liste","listePart"));
+        return view("pages/liste", compact("liste", "listePart"));
     }
 
     /**
@@ -114,7 +114,7 @@ class ReunionController extends Controller
     {
 
         $data = "https://tbg.silasmas.com/verify/" . $id;
-        $image = QrCode::size(300)->format("png")
+        $image = QrCode::size(200)->format("png")
             ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.2, true)
             ->generate("$data");
         echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
