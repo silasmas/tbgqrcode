@@ -1,124 +1,129 @@
 @extends('layouts.adminTemplate', ['titre' => isset($listePart)?'Détails participant':'Liste des participants'])
 @section('autres_style')
-    <link href="{{ asset('assets/css/dataTables/datatables.min.cs') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/dataTables/datatables.min.cs') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    <div class="wrapper wrapper-content">
-        <div class="row animated fadeInRight">
-            <div class="panel-body">
-                <div class="table-responsive">
-                    @if (isset($listePart))
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Image</th>
-                                <th>Theme</th>
-                                <th>type</th>
-                                <th>Contexte</th>
-                                <th>Présence</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($liste->reunion as $i)
-                                <tr class="gradeX">
-                                    <td>{{ $loop->index+1 }}</td>
-                                    <td><img src="{{ asset('storage/'.$i->image) }}" alt=""
-                                        class="img-fluid" height="100" width="100"></td>
-                                    <td>{{ $i->titre}}</td>
-                                    <td>{{ $i->type}}</td>
-                                    <td>{{ $i->context }}</td>   
-                                    <td>{{ $i->pivot->status=="valide"?"Présent":"Absent" }}</td>   
-                                @empty
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInRight">
+        <div class="panel-body">
+            <div class="table-responsive">
+                @if (isset($listePart))
+                <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Image</th>
+                            <th>Theme</th>
+                            <th>type</th>
+                            <th>Contexte</th>
+                            <th>Présence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($liste->reunion as $i)
+                        <tr class="gradeX">
+                            <td>{{ $loop->index+1 }}</td>
+                            <td><img src="{{ asset('storage/'.$i->image) }}" alt="" class="img-fluid" height="100"
+                                    width="100"></td>
+                            <td>{{ $i->titre}}</td>
+                            <td>{{ $i->type}}</td>
+                            <td>{{ $i->context }}</td>
+                            <td>{{ $i->pivot->status=="valide"?"Présent":"Absent" }}</td>
+                            @empty
                             @endforelse
 
 
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>#</th>
-                                <th>Image</th>
-                                <th>Theme</th>
-                                <th>type</th>
-                                <th>Contexte</th>
-                                <th>Présence</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    @else
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>NOM & PRENOM</th>
-                                <th>SEXE</th>
-                                <th>TELEPHONE</th>
-                                <th>Email</th>
-                                <th>Options d'enoi du QRCODE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($liste->participan as $i)
-                                <tr class="gradeX">
-                                    <td>{{ $loop->index }}</td>
-                                    <td>{{ $i->nom." ".$i->prenom}}</td>
-                                    <td>{{ $i->sexe}}</td>
-                                    <td>{{ $i->phone }}</td>
-                                    <td>{{ $i->email }}</td>
-                                    @if ($i->date_fin > now())
-                                    <td class="center">
-                                        <a href="mailto:secretaire@actiondamien-rdc.org" target="_blank" id="deleteCat" alt='envoyer le QRCODE par mail'
-                                            class="btn btn-outline btn-warning dim">
-                                            <i class="fa fa-envelope"></i>
-                                            <i class="fa fa-qrcode"></i>
-                                        </a>
-                                       <div hidden> {{ $msg=$i->nom."-".$i->prenom." Ceci est votre billet d'entré dans la conférence *$liste->titre*, celui-ci est confidentiel, prière de ne pas le partager" }}</div>
-                                        <a href="https://api.whatsapp.com/send?phone={{$i->phone}}&text={{$msg}}&source&data=" target="_blank"alt='envoyer le QRCODE par whatsapp'
-                                            class="btn btn-outline btn-primary dim">
-                                            <i class="fa fa-whatsapp"></i>
-                                            <i class="fa fa-qrcode"></i>
-                                        </a>
-                                        <a href="{{ route('viewQrcode',["id"=>$i->id.".".$liste->id]) }}" target="_blank" id="deleteCat" alt='envoyer le QRCODE par mail'
-                                            class="btn btn-outline btn-danger dim">
-                                            <i class="fa fa-download"></i>
-                                            <i class="fa fa-qrcode"></i>
-                                    </td>
-                                    @else
-                                    <td class="center">
-                                    <span class="label label-danger">Cette réunion est déjà passée,partage de billet d'accès bloquer</span>
-                                                                                        </td>
-                                    @endif
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>Image</th>
+                            <th>Theme</th>
+                            <th>type</th>
+                            <th>Contexte</th>
+                            <th>Présence</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                @else
+                <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>NOM & PRENOM</th>
+                            <th>SEXE</th>
+                            <th>TELEPHONE</th>
+                            <th>Email</th>
+                            <th>Options d'enoi du QRCODE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($liste->participan as $i)
+                        <tr class="gradeX">
+                            <td>{{ $loop->index }}</td>
+                            <td>{{ $i->nom." ".$i->prenom}}</td>
+                            <td>{{ $i->sexe}}</td>
+                            <td>{{ $i->phone }}</td>
+                            <td>{{ $i->email }}</td>
+                            @if ($i->date_fin< now())
+                            <td class="center">
+                                <a href="mailto:secretaire@actiondamien-rdc.org" target="_blank" id="deleteCat"
+                                    alt='envoyer le QRCODE par mail' class="btn btn-outline btn-warning dim">
+                                    <i class="fa fa-envelope"></i>
+                                    <i class="fa fa-qrcode"></i>
+                                </a>
+                                <div hidden> {{ $msg=$i->nom."-".$i->prenom." Ceci est votre billet d'entré dans la
+                                    conférence *$liste->titre*, celui-ci est confidentiel, prière de ne pas le partager"
+                                    }}</div>
+                                <a href="https://api.whatsapp.com/send?phone={{$i->phone}}&text={{$msg}}&source&data="
+                                    target="_blank" alt='envoyer le QRCODE par whatsapp'
+                                    class="btn btn-outline btn-primary dim">
+                                    <i class="fa fa-whatsapp"></i>
+                                    <i class="fa fa-qrcode"></i>
+                                </a>
+                                <a href="{{ route('viewQrcode',["id"=>$i->id.".".$liste->id]) }}" target="_blank"
+                                    id="deleteCat" alt='envoyer le QRCODE par mail'
+                                    class="btn btn-outline btn-danger dim">
+                                    <i class="fa fa-download"></i>
+                                    <i class="fa fa-qrcode"></i>
+                            </td>
+                            @else
+                            <td class="center">
+                                <span class="label label-danger">Cette réunion est déjà passée,partage de billet d'accès
+                                    bloquer</span>
+                            </td>
+                            @endif
 
 
-                                @empty
+                            @empty
                             @endforelse
 
 
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>#</th>
-                                <th>NOM & PRENOM</th>
-                                <th>SEXE</th>
-                                <th>TELEPHONE</th>
-                                <th>Email</th>
-                                <th>Options</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    @endif
-                    
-                </div>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>NOM & PRENOM</th>
+                            <th>SEXE</th>
+                            <th>TELEPHONE</th>
+                            <th>Email</th>
+                            <th>Options</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                @endif
+
             </div>
-
         </div>
+
     </div>
+</div>
 @endsection
 @section('autres-script')
-    <script src="{{ asset('assets/js/dataTables/datatables.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
+<script src="{{ asset('assets/js/dataTables/datatables.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
             $('.dataTables-example').DataTable({
                 language: {
                     processing: "Traitement en cours...",
@@ -177,5 +182,5 @@
 
 
         });
-    </script>
+</script>
 @endsection

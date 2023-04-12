@@ -176,6 +176,14 @@
                                                         <a href="{{ route('viewListe',['id'=>$t->id]) }}"
                                                         class="btn btn-xs btn-outline btn-primary">Liste des participants</a>
                                                         </td>
+                                                        <td class="client-status text-center">
+                                                        <a href="{{ $t->id }}"
+                                                            onclick="event.preventDefault();deleter({{ $t->id }},'delSens')"
+                                                        class="btn btn-lg btn-danger">
+                                                        <span class="label label-danger">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </span></a>
+                                                        </td>
 
                                                     </tr>
                                                   @empty
@@ -216,7 +224,7 @@
                                                     <td><a data-toggle="tab" href="#"
                                                             class="client-link">{{ $t->nom." ".$t->prenom." ".$t->postnom }}</a></td>
                                                     <td> {{ $t->sexe }}</td>
-                                                   
+
                                                     <td>{{ $t->phone }}</td>
                                                     <td>{{ $t->email }}</td>
                                                     <td><span class="label label-info">Réunion(s) : {{ $t->reunion->count() }}</span></td>
