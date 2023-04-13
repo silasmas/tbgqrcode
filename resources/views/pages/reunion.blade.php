@@ -209,9 +209,8 @@
                                                                     $t->participan->count() }}</span></td>
                                                             <td class="client-status text-center">
                                                                 <span class="label {{ $t->date_fin> now()?"
-                                                                    label-primary":"label-danger" }}">Date {{
-                                                                    $t->date_fin> now()?$t->date_debut :"La réunion est
-                                                                    déjà passée"}}</span>
+                                                                    label-primary":"label-danger" }}">{{
+                                                                    $t->date_fin> now()?"Date ". $t->date_debut :"Réunion passée"}}</span>
                                                             </td>
                                                             <td class="client-status text-center">
                                                                 <a href="{{ route('viewListe',['id'=>$t->id]) }}"
