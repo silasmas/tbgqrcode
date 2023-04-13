@@ -1,6 +1,6 @@
 @extends('layouts.adminTemplate',['titre'=>"Accueil"])
 @section('autres_style')
-<link href="{{asset('assets/admin/css/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
+<link href="{{asset('assets/css/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/chosen/bootstrap-chosen.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/select2/select2.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/js/parsley/parsley.css') }}">

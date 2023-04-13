@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/js/parsley/parsley.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/select2/select2.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap-markdown/bootstrap-markdown.min.css') }}">
-<link href="{{ asset('assets/css/dataTables/datatables.min.cs') }}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dataTables/datatables.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')

@@ -11,12 +11,12 @@
     <title>{{ config('app.name') }} | {{ isset($titre) ? $titre : '' }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Scripts -->
-    <script src="{{ asset('assets/admin/js/app.js') }}" defer></script>
+    <script src="{{ asset('assets/js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="icon" href="{{ asset('assets/img/favicon/android-icon-192x192.png') }}" type="image/rdp-icon">
+    <link rel="icon" href="{{ asset('assets/img/logo.jpg') }}" type="image/rdp-icon">
 
     <!-- Styles -->
 
@@ -37,7 +37,7 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         @if (auth()->check())
-                            
+
                         <div class="dropdown profile-element">
                             <span>
                                 <img alt="image" class="img-circle" src="{{ asset('assets/img/default.png') }}"
@@ -80,7 +80,7 @@
                             </li>
                             <li class="{{ Route::current()->getName() == 'G_carthographie' ? 'active' : '' }}">
                                 <a href="{{ route('G_carthographie') }}">Users</a>
-                            </li> 
+                            </li>
                             <li class="{{ Route::current()->getName() == 'scanner' ? 'active' : '' }}">
                                 <a href="{{ route('scanne') }}">Scanner</a>
                             </li>--}}
@@ -231,7 +231,7 @@
 
             swal({
                 title: "Attention suppression",
-                text: "Etes -vous prêt de supprimer cette information?",
+                text: "Etes -vous prêt de supprimer cette information?"+id,
                 icon: 'warning',
                 dangerMode: true,
                 buttons: {
