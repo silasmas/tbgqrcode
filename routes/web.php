@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\reunion;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReunionController;
+use App\Models\reunion;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,16 +27,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/agent', [AboutController::class, 'addSlide'])->name('agent');
     Route::get('viewQrcode/{id}', [ReunionController::class, 'show'])->name('viewQrcode');
 
-
     Route::get('viewListe/{id}', [ReunionController::class, 'viewListe'])->name('viewListe');
     Route::get('viewListeReunion/{id}', [ReunionController::class, 'viewListeReunion'])->name('viewListeReunion');
 
     Route::post('/add.reunion', [ReunionController::class, 'store'])->name('add.reunion');
+
+    Route::get('delReunion/{id}', [ReunionController::class, 'destroy'])->name('delReunion');
 });
 
 Route::get('/dashboard', function () {
-    $reunionns=reunion::where([["status","Ouvert"],["date_fin",">",NOW()]])->with("participan")->get();
-    return view('dashboard',compact('reunionns'));
+    $reunionns = reunion::where([["status", "Ouvert"], ["date_fin", ">", NOW()]])->with("participan")->get();
+    return view('dashboard', compact('reunionns'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

@@ -33,12 +33,12 @@
                     </li>
                     <li class=""><a data-toggle="tab" href="#tab-futurReunion">
                             Liste des réunions
-                            <span class="label label-warning"></span>
+                            <span class="label label-warning">{{ $reunions->count() }}</span>
                         </a>
                     </li>
                     <li class=""><a data-toggle="tab" href="#tab-participants">
                             Liste des participants
-                            <span class="label label-warning"></span>
+                            <span class="label label-warning">{{ $participan->count() }}</span>
                         </a>
                     </li>
                 </ul>
@@ -160,9 +160,14 @@
                                                 <table class="table table-striped table-hover">
                                                     <tbody>
                                                         @forelse ($reunions as $t)
+
                                                         <tr>
+                                                        <td><img src="{{ asset('storage/'.$t->image) }}" alt="" class="img-fluid" height="100"
+                                                            width="100">
+                                                        </td>
                                                         <td><a data-toggle="tab" href="#"
-                                                                class="client-link">{{ $t->titre }}</a></td>
+                                                                class="client-link">{{ $t->titre }}</a>
+                                                        </td>
                                                         <td> {{ $t->subtitre }}</td>
                                                         <td class="contact-type"><i class="fa fa-clock"> </i>
                                                         </td>
@@ -177,8 +182,8 @@
                                                         class="btn btn-xs btn-outline btn-primary">Liste des participants</a>
                                                         </td>
                                                         <td class="client-status text-center">
-                                                        <a href="{{ $t->id }}"
-                                                            onclick="event.preventDefault();deleter({{ $t->id }},'delSens')"
+                                                        <a href="{{ $t->id}}"
+                                                            onclick="event.preventDefault();deleter({{$t->id }},'delReunion')"
                                                         class="btn btn-lg btn-danger">
                                                         <span class="label label-danger">
                                                             <i class="fa fa-trash-o"></i>

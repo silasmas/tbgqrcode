@@ -139,8 +139,33 @@ class ReunionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(reunion $reunion)
+    public function destroy($id)
     {
-        //
+        $present = reunionParticipan::where("reunion_id", $id);
+        // $i = explode('.', $id);
+        // $retour = reunionParticipan::where([["participan_id", $i[0]], ["reunion_id", $i[1]], ["status", "Valide"]])->first();
+
+        if ($present) {
+            return response()->json([
+                'reponse' => false,
+                'msg' => 'Impossible de supprimer cette réunion car elle contient au-moins un participant',
+            ]);
+        } else {
+            $reunion = reunion::find($id);
+            if ($reunion) {
+                $reunion->delete();
+                if ($reunion) {
+                    return response()->json([
+                        'reponse' => true,
+                        'msg' => 'Suppression Réussie.',
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'reponse' => false,
+                    'msg' => 'Erreur de suppression',
+                ]);
+            }
+        }
     }
 }
