@@ -231,7 +231,7 @@
 
             swal({
                 title: "Attention suppression",
-                text: "Etes -vous prêt de supprimer cette information?"+id,
+                text: "Etes -vous prêt de supprimer cette information?"+String(id),
                 icon: 'warning',
                 dangerMode: true,
                 buttons: {
@@ -243,6 +243,51 @@
 
                     $.ajax({
                         url: url + "/" + id,
+                        method: "GET",
+                        data: {
+                            'idv': id
+                        },
+                        success: function(data) {
+                            //  load('#tab-session');
+                            if (!data.reponse) {
+                                swal({
+                                    title: data.msg,
+                                    icon: 'error'
+                                })
+
+                            } else {
+                                swal({
+                                    title: data.msg,
+                                    icon: 'success'
+                                })
+                                actualiser();
+                            }
+                        },
+                    });
+                } else {
+                    swal({
+                        title: "Suppression annuler",
+                        icon: 'error'
+                    })
+                }
+            });
+        }
+        function deletePar(id,idr, url) {
+
+            swal({
+                title: "Attention suppression",
+                text: "Etes -vous prêt de supprimer cette information?",
+                icon: 'warning',
+                dangerMode: true,
+                buttons: {
+                    cancel: 'Non',
+                    delete: 'OUI'
+                }
+            }).then(function(willDelete) {
+                if (willDelete) {
+
+                    $.ajax({
+                        url: url + "/" + id+"."+idr,
                         method: "GET",
                         data: {
                             'idv': id

@@ -1,6 +1,6 @@
 @extends('layouts.adminTemplate', ['titre' => isset($listePart)?'Détails participant':'Liste des participants'])
 @section('autres_style')
-<link href="{{ asset('assets/css/dataTables/datatables.min.cs') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/dataTables/datatables.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -89,7 +89,7 @@
                                     <i class="fa fa-qrcode"></i>
                                 </a>
                                 <a href="#"
-                                    onclick='event.preventDefault();deleter({{"$i->id.$liste->id"}},"../delPartReunion")' alt='envoyer le QRCODE par mail'
+                                    onclick='event.preventDefault();deletePar({{$i->id}},{{$liste->id}},"../delPartReunion")' alt='envoyer le QRCODE par mail'
                                     class="btn btn-outline btn-danger dim">
                                     <i class="fa fa-trash-o"></i>
                                     <i class="fa fa-user"></i>
