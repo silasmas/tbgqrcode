@@ -231,7 +231,7 @@
 
             swal({
                 title: "Attention suppression",
-                text: "Etes -vous prêt de supprimer cette information?"+String(id),
+                text: "Etes -vous prêt de supprimer cette information?",
                 icon: 'warning',
                 dangerMode: true,
                 buttons: {
