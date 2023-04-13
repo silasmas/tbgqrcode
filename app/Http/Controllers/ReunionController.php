@@ -171,7 +171,7 @@ class ReunionController extends Controller
 
     public function delPartReunion($id)
     {
-        $i = explode('.', $id);
+        $i = explode('/', $id);
         $retour = reunionParticipan::where([["participan_id", $i[0]], ["reunion_id", $i[1]], ["status", "Valide"]])->first();
         dd($id);
         if ($retour) {
