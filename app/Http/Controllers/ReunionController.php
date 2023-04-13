@@ -144,7 +144,7 @@ class ReunionController extends Controller
         $present = reunionParticipan::where("reunion_id", $id)->get();
         // $i = explode('.', $id);
         // $retour = reunionParticipan::where([["participan_id", $i[0]], ["reunion_id", $i[1]], ["status", "Valide"]])->first();
-        
+
         if ($present->count() > 0) {
             return response()->json([
                 'reponse' => false,
@@ -173,7 +173,7 @@ class ReunionController extends Controller
     {
         $i = explode('.', $id);
         $retour = reunionParticipan::where([["participan_id", $i[0]], ["reunion_id", $i[1]], ["status", "Valide"]])->first();
-
+        dd($id);
         if ($retour) {
             $retour->delete();
             if ($retour) {
