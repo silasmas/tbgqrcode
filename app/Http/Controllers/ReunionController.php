@@ -141,11 +141,11 @@ class ReunionController extends Controller
      */
     public function destroy($id)
     {
-        $present = reunionParticipan::where("reunion_id", $id);
+        $present = reunionParticipan::where("reunion_id", $id)->get();
         // $i = explode('.', $id);
         // $retour = reunionParticipan::where([["participan_id", $i[0]], ["reunion_id", $i[1]], ["status", "Valide"]])->first();
-
-        if ($present) {
+        
+        if ($present->count() > 0) {
             return response()->json([
                 'reponse' => false,
                 'msg' => 'Impossible de supprimer cette réunion car elle contient au-moins un participant',
@@ -167,5 +167,29 @@ class ReunionController extends Controller
                 ]);
             }
         }
+    }
+
+    public function delPartReunion($id)
+    {
+        $i = explode('.', $id);
+        $retour = reunionParticipan::where([["participan_id", $i[0]], ["reunion_id", $i[1]], ["status", "Valide"]])->first();
+
+        if ($retour) {
+            $retour->delete();
+            if ($retour) {
+                return response()->json([
+                    'reponse' => true,
+                    'msg' => 'Suppression Réussie.',
+                ]);
+            }
+
+        } else {
+            return response()->json([
+                'reponse' => false,
+                'msg' => 'Erreur de suppression!!',
+            ]);
+
+        }
+
     }
 }

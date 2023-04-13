@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add.reunion', [ReunionController::class, 'store'])->name('add.reunion');
 
     Route::get('delReunion/{id}', [ReunionController::class, 'destroy'])->name('delReunion');
+    Route::get('delPartReunion/{id}', [ReunionController::class, 'delPartReunion'])->name('delPartReunion');
 });
 
 Route::get('/dashboard', function () {
