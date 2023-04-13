@@ -68,7 +68,20 @@
                                                             <a href="{{ route('viewListe',['id'=>$t->id]) }}"
                                                             class="btn btn-xs btn-outline btn-primary">Liste des participants</a>
                                                             </td>
-
+                                                            <td class="client-status text-center">
+                                                                @if($t->status=="Ouvert")
+                                                                <span class="label label-success">
+                                                                    <i class="fa fa-unclock"></i>Ouverte</span>
+                                                                @endif
+                                                                @if($t->status=="Fermee")
+                                                                <span class="label label-danger">
+                                                                    <i class="fa fa-clock"> </i>Fermée</span>
+                                                                @endif
+                                                                @if($t->status=="En attente")
+                                                                <i class="fa fa-clock"></i>
+                                                            <span class="label label-peding">En attente</span>
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                       @empty
                                                            <span class="label label-danger">Aucune reunion en vue</span>

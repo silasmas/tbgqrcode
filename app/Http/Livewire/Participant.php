@@ -65,18 +65,25 @@ class Participant extends Component
         if ($this->reunion != "") {
             //dd($this->reunion);
             $retour = reunionParticipan::where([["participan_id", $id], ["reunion_id", $this->reunion]])->first();
-            if ($retour) {
-                session()->flash('message', 'Ce client est déjà enregistrer pour cet evenement');
-                session()->flash('type', 'warning');
-            } else {
-                $qrinfo = reunionParticipan::create([
-                    'participan_id' => $id,
-                    'reunion_id' => $this->reunion,
-                ]);
-                session()->flash('message', 'Enregistrement réussit');
-                session()->flash('type', 'success');
-                session()->flash('qrcode', $qrinfo->id);
-                $this->vider();
+            $nbreunion = reunionParticipan::where([["reunion_id", $this->reunion]])->get();
+            $reun=reunion::find($this->reunion);
+            if($nbreunion->count()==$reun->quota){
+                session()->flash('message', "Impossible d'enregistrer ce participant dans cette réunion car son quota est atteind!");
+                session()->flash('type', 'danger');
+            }else{
+                if ($retour) {
+                    session()->flash('message', 'Ce client est déjà enregistrer pour cet evenement');
+                    session()->flash('type', 'warning');
+                } else {
+                    $qrinfo = reunionParticipan::create([
+                        'participan_id' => $id,
+                        'reunion_id' => $this->reunion,
+                    ]);
+                    session()->flash('message', 'Enregistrement réussit');
+                    session()->flash('type', 'success');
+                    session()->flash('qrcode', $qrinfo->id);
+                    $this->vider();
+                }
             }
         } else {
             session()->flash('message', 'Aucune réunion selectionée');
@@ -93,6 +100,7 @@ class Participant extends Component
         if ($this->ids == "") {
             $this->validate();
 
+
             $client = participan::create([
                 'nom' => $this->nom,
                 'postnom' => $this->postnom,
@@ -107,7 +115,7 @@ class Participant extends Component
                 $this->vider();
 
             } else {
-                session()->flash('message', 'Aucun client trouvé');
+                session()->flash('message', 'Erreur d\'enregistrement');
                 session()->flash('type', 'danger');
             }
         } else {
@@ -196,7 +204,7 @@ class Participant extends Component
     public function render()
     {
         //dd(today());
-        $reunions = reunion::where([["status", "Ouvert"], ["date_fin", ">", now()]])
+        $reunions = reunion::where([["status","!=", "fermee"], ["date_fin", ">", now()]])
             ->get();
         //dd($reunions);
         return view('livewire.participant', compact('reunions'));

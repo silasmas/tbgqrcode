@@ -31,13 +31,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('viewListeReunion/{id}', [ReunionController::class, 'viewListeReunion'])->name('viewListeReunion');
 
     Route::post('/add.reunion', [ReunionController::class, 'store'])->name('add.reunion');
+    Route::post('/update.reunion', [ReunionController::class, 'update'])->name('update.reunion');
 
     Route::get('delReunion/{id}', [ReunionController::class, 'destroy'])->name('delReunion');
     Route::get('delPartReunion/{id}', [ReunionController::class, 'delPartReunion'])->name('delPartReunion');
+    Route::get('editRenunion/{id}', [ReunionController::class, 'edit'])->name('editRenunion');
 });
 
 Route::get('/dashboard', function () {
-    $reunionns = reunion::where([["status", "Ouvert"], ["date_fin", ">", NOW()]])->with("participan")->get();
+    $reunionns = reunion::where([["status","!=", "fermee"], ["date_fin", ">", NOW()]])->with("participan")->get();
     return view('dashboard', compact('reunionns'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 

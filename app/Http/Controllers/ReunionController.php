@@ -123,17 +123,53 @@ class ReunionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(reunion $reunion)
+    public function edit($id)
     {
-        //
+        $categorie = reunion::find($id);
+        $freunions = reunion::where([["status", "Ouvert"], ["date_fin", ">", now()]])->with("participan")->get();
+        $reunions = reunion::with("participan")->get();
+        $participan = participan::with("reunion")->get();
+
+        return view("pages/reunion", compact("categorie","reunions", "freunions", "participan"));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatereunionRequest $request, reunion $reunion)
+    public function update(Request $request)
     {
-        //
+        $reunion=reunion::find($request->id);
+        if ($reunion) {
+            $file = $request->file('image');
+            if ($file!="") {
+                $photo = public_path() . '/storage/' . $reunion->image;
+                file_exists($photo) ? unlink($photo) : '';
+            }
+            $file == '' ? "": ($filenameImg = 'reunion/' . time() . '.' . $file->getClientOriginalName());
+            $file == '' ?  "" : $file->move('storage/reunion', $filenameImg);
+            $reunion->update([
+            'titre'=>$request->titre,
+            'subtitre' =>$request->subtitre,
+            'titre'=> $request->titre,
+            'type' => $request->type,
+            'context' => $request->contexte,
+            'date_debut' => $request->date_debut,
+            'date_fin' => $request->date_fin,
+            'quota' => $request->quota,
+            'status' => $request->status,
+            'image' => isset($filenameImg)?$filenameImg:$reunion->image,
+            ]);
+            $freunions = reunion::where([["status", "Ouvert"], ["date_fin", ">", now()]])->with("participan")->get();
+            $reunions = reunion::with("participan")->get();
+            $participan = participan::with("reunion")->get();
+
+            return redirect("reunion")
+            ->with(['message' => 'La modification est faite avec succès', "type" => "success"]);
+
+        } else {
+            return back()->with(['message' => 'Erreur de modification', "type" => "danger"]);
+        }
     }
 
     /**

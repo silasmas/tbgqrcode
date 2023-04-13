@@ -20,7 +20,7 @@
                     {{ session()->get('message') }}
                 </div>
             </div>
-        @endif
+            @endif
         </div>
         <div class="col-lg-12">
 
@@ -49,7 +49,8 @@
                                 <div class="ibox" id="tabCat">
                                     <div class="ibox-title">
                                         <h5>
-                                            {{ isset($categorie) ? 'Ce formulaire vous permet de modifier une actualité' : 'Ce formulaire vous permet de crée une actualité' }}
+                                            {{ isset($categorie) ? 'Ce formulaire vous permet de modifier une actualité'
+                                            : 'Ce formulaire vous permet de crée une actualité' }}
                                         </h5>
                                     </div>
                                     <div class="ibox-content" id="tab-rubrique">
@@ -60,82 +61,112 @@
                                         <div class='row'>
                                             <div class=" col-lg-12 col-sm-12">
                                                 <form method="POST" class="form-group"
-                                                        action="{{route('add.reunion') }}" enctype="multipart/form-data" data-parsley-validate>
+                                                    action="{{ isset($categorie) ?route('update.reunion') : route('add.reunion')  }}"
+                                                    enctype="multipart/form-data" data-parsley-validate>
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col-lg-6 form-group ">
                                                             <label>Titre </label>
                                                             <input type="text" hidden
                                                                 value="{{ isset($categorie) ? $categorie->id : '' }}"
-                                                                name="idslide"  />
-                                                            <input type="text" placeholder="Titre"
-                                                                class="form-control" name='titre'
-                                                                value="" required>
+                                                                name="id" />
+                                                            <input type="text" placeholder="Titre" class="form-control"
+                                                                name='titre'
+                                                                value="{{ isset($categorie) ? $categorie->titre : '' }}"
+                                                                required>
 
                                                         </div>
                                                         <div class="col-lg-6 form-group ">
                                                             <label>Sous-titre</label>
                                                             <input type="text" placeholder="Sous titre"
-                                                                class="form-control" name='subtitre'  required>
+                                                                class="form-control" name='subtitre'
+                                                                value="{{ isset($categorie) ? $categorie->subtitre : '' }}"
+                                                                required>
                                                         </div>
                                                         <div class="col-lg-6 form-group ">
                                                             <label>Forme de la réunion</label>
-                                                            <input type="text" placeholder="Forme (Présencielle, en ligne...)"
-                                                                class="form-control" name='type'   required>
+                                                            <input type="text"
+                                                                placeholder="Forme (Présencielle, en ligne...)"
+                                                                class="form-control" name='type'
+                                                                value="{{ isset($categorie) ? $categorie->type : '' }}"
+                                                                required>
                                                         </div>
                                                         <div class="col-lg-6 form-group ">
                                                             <label>Contexte</label>
                                                             <input type="text" placeholder="Contexte (MasterClasse...)"
-                                                                class="form-control" name='contexte'>
+                                                                class="form-control" name='contexte'
+                                                                value="{{ isset($categorie) ? $categorie->context : '' }}">
                                                         </div>
                                                         <div class="col-lg-6 form-group ">
                                                             <label>Date debut</label>
-                                                            <input type="date" placeholder="Date"
-                                                                class="form-control" name='date_debut'>
+                                                            <input type="date" placeholder="Date" class="form-control"
+                                                                name='date_debut'
+                                                                value="{{ isset($categorie) ? $categorie->date_debut : '' }}">
                                                         </div>
                                                         <div class="col-lg-6 form-group ">
                                                             <label>Date Fin</label>
                                                             <input type="date" placeholder="Date fin"
-                                                                class="form-control" name='date_fin'>
+                                                                class="form-control" name='date_fin'
+                                                                value="{{ isset($categorie) ? $categorie->date_fin : '' }}">
                                                         </div>
                                                         <div class="col-lg-6 form-group ">
                                                             <label>Quota</label>
-                                                            <input type="number" placeholder="Quota (Nombre Max de personne)"
-                                                                class="form-control" name='quota'>
+                                                            <input type="number"
+                                                                placeholder="Quota (Nombre Max de personne)"
+                                                                class="form-control" name='quota'
+                                                                value="{{ isset($categorie) ? $categorie->quota : '' }}">
                                                         </div>
                                                         <div class="col-lg-6 form-group ">
                                                             <label>Status</label>
                                                             <select class=" form-control" name="status" required>
-                                                                <option value="" disabled selected>Selectionnez un status</option>
-                                                                    <option value="Ouvert">Ouvert</option>
-                                                                    <option value="En attente">En attente</option>
-                                                                    <option value="Fermee">Fermée</option>
+                                                                <option value="" disabled {{ isset($categorie) ? ""
+                                                                    : 'selected' }}>Selectionnez un status</option>
+                                                                <option value="Ouvert" {{ isset($categorie)&&
+                                                                    $categorie->status=="Ouvert" ?"seleccted='true'" :
+                                                                    ''
+                                                                    }}>Ouvert</option>
+                                                                <option value="En attente" {{ isset($categorie)&&
+                                                                    $categorie->status=="En attente" ?"seleccted" : ''
+                                                                    }}>En attente</option>
+                                                                <option value="Fermee" {{ isset($categorie)&&
+                                                                    $categorie->status=="Fermee" ?"seleccted" : ''
+                                                                    }}>Fermée</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-sm-12 form-group">
                                                             <label>Image</label>
                                                             <div class=" fileinput fileinput-new input-group"
                                                                 data-provides="fileinput">
-                                                                <div class="form-control"
-                                                                    data-trigger="fileinput">
-                                                                    <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                                                                <div class="form-control" data-trigger="fileinput">
+                                                                    <i
+                                                                        class="glyphicon glyphicon-file fileinput-exists"></i>
                                                                     <span class="fileinput-filename"></span>
                                                                 </div>
                                                                 <span
                                                                     class="input-group-addon btn btn-default btn-file"><span
                                                                         class="fileinput-new">cover</span>
                                                                     <span class="fileinput-exists">Changer</span>
-                                                                    <input type="file" name="image"  required></span>
+                                                                    <input type="file" name="image" {{ isset($categorie)
+                                                                        ? "" : 'required' }}></span>
                                                                 <a href="#"
                                                                     class="input-group-addon btn btn-default fileinput-exists"
                                                                     data-dismiss="fileinput">Supprimer</a>
                                                             </div>
                                                         </div>
+                                                        @if(isset($categorie))
+
+                                                        <div class="col-sm-12 form-group">
+                                                            <img src="{{ asset('storage/'.$categorie->image) }}" alt=""
+                                                                class="img-fluid" height="100" width="100">
+                                                        </div>
+                                                        @endif
                                                         <div class="col-lg-offset-3 col-lg-6 col-sm-12 form-group">
                                                             <div class="col-sm-offset-4 col-sm-5">
                                                                 <button class="ladda-button btn btn-sm btn-primary"
                                                                     type="submit">
-                                                                    <i class="fa fa-spinner fa-send"></i>  Enregistrer</button>
+                                                                    <i class="fa fa-spinner fa-send"></i>{{
+                                                                    isset($categorie) ? "Modifier" : 'Enregistrer'
+                                                                    }}</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -150,7 +181,7 @@
                     <div class="tab-pane" id="tab-futurReunion">
                         <div class="panel-body">
                             <div class="ibox-title">
-                                <h5>Cette page affiche toutes les réunions future </h5>
+                                <h5>Cette page affiche toutes les réunions </h5>
                             </div>
                             <div class="ibox-content">
                                 <div class='row'>
@@ -162,38 +193,65 @@
                                                         @forelse ($reunions as $t)
 
                                                         <tr>
-                                                        <td><img src="{{ asset('storage/'.$t->image) }}" alt="" class="img-fluid" height="100"
-                                                            width="100">
-                                                        </td>
-                                                        <td><a data-toggle="tab" href="#"
-                                                                class="client-link">{{ $t->titre }}</a>
-                                                        </td>
-                                                        <td> {{ $t->subtitre }}</td>
-                                                        <td class="contact-type"><i class="fa fa-clock"> </i>
-                                                        </td>
-                                                        <td>{{ $t->type }}</td>
-                                                        <td>{{ $t->context }}</td>
-                                                        <td><span class="label label-info">Participant(s) : {{ $t->participan->count() }}</span></td>
-                                                        <td class="client-status text-center">
-                                                            <span class="label {{ $t->date_fin> now()?"label-primary":"label-danger" }}">Date {{ $t->date_fin> now()?$t->date_debut :"La réunion est déjà passée"}}</span>
-                                                        </td>
-                                                        <td class="client-status text-center">
-                                                        <a href="{{ route('viewListe',['id'=>$t->id]) }}"
-                                                        class="btn btn-xs btn-outline btn-primary">Liste des participants</a>
-                                                        </td>
-                                                        <td class="client-status text-center">
-                                                        <a href="{{ $t->id}}"
-                                                            onclick="event.preventDefault();deleter({{$t->id }},'delReunion')"
-                                                        class="btn btn-lg btn-danger">
-                                                        <span class="label label-danger">
-                                                            <i class="fa fa-trash-o"></i>
-                                                        </span></a>
-                                                        </td>
+                                                            <td><img src="{{ asset('storage/'.$t->image) }}" alt=""
+                                                                    class="img-fluid" height="50" width="50">
+                                                            </td>
+                                                            <td><a data-toggle="tab" href="#" class="client-link">{{
+                                                                    $t->titre }}</a>
+                                                            </td>
+                                                            <td class="client-status text-center">
+                                                                <span class="btn btn-xs btn-outline btn-primary">Quota : {{ $t->quota }} </span>
+                                                            </td>
+                                                            <td> {{ $t->subtitre }}</td>
+                                                            <td>{{ $t->type }}</td>
+                                                            <td>{{ $t->context }}</td>
+                                                            <td><span class="label label-info">Participant(s) : {{
+                                                                    $t->participan->count() }}</span></td>
+                                                            <td class="client-status text-center">
+                                                                <span class="label {{ $t->date_fin> now()?"
+                                                                    label-primary":"label-danger" }}">Date {{
+                                                                    $t->date_fin> now()?$t->date_debut :"La réunion est
+                                                                    déjà passée"}}</span>
+                                                            </td>
+                                                            <td class="client-status text-center">
+                                                                <a href="{{ route('viewListe',['id'=>$t->id]) }}"
+                                                                    class="btn btn-xs btn-outline btn-primary">Liste des
+                                                                    participants</a>
+                                                            </td>
+                                                            <td class="client-status text-center">
+                                                                <a href="{{ $t->id}}"
+                                                                    onclick="event.preventDefault();deleter({{$t->id }},'delReunion')"
+                                                                    class="btn btn-lg btn-danger">
+                                                                    <span class="label label-danger">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </span></a>
+                                                            </td>
+                                                            <td class="client-status text-center">
+                                                                <a href="{{ route('editRenunion',['id'=>$t->id]) }}"
+                                                                    class="btn btn-lg btn-warning">
+                                                                    <span class="label label-warning">
+                                                                        <i class="fa fa-edit"></i>
+                                                                    </span></a>
+                                                            </td>
+                                                            <td class="client-status text-center">
+                                                                @if($t->status=="Ouvert")
+                                                                <span class="label label-success">
+                                                                    <i class="fa fa-unclock"></i>Ouverte</span>
+                                                                @endif
+                                                                @if($t->status=="Fermee")
+                                                                <span class="label label-danger">
+                                                                    <i class="fa fa-clock"> </i>Fermée</span>
+                                                                @endif
+                                                                @if($t->status=="En attente")
+                                                                <i class="fa fa-clock"></i>
+                                                            <span class="label label-peding">En attente</span>
+                                                                @endif
+                                                            </td>
 
-                                                    </tr>
-                                                  @empty
-                                                       <span class="label label-danger">Aucune reunion en vue</span>
-                                                  @endforelse
+                                                        </tr>
+                                                        @empty
+                                                        <span class="label label-danger">Aucune reunion en vue</span>
+                                                        @endforelse
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -226,25 +284,30 @@
                                                 <tbody>
                                                     @forelse ($participan as $t)
                                                     <tr>
-                                                    <td><a data-toggle="tab" href="#"
-                                                            class="client-link">{{ $t->nom." ".$t->prenom." ".$t->postnom }}</a></td>
-                                                    <td> {{ $t->sexe }}</td>
+                                                        <td><a data-toggle="tab" href="#" class="client-link">{{
+                                                                $t->nom." ".$t->prenom." ".$t->postnom }}</a></td>
+                                                        <td> {{ $t->sexe }}</td>
 
-                                                    <td>{{ $t->phone }}</td>
-                                                    <td>{{ $t->email }}</td>
-                                                    <td><span class="label label-info">Réunion(s) : {{ $t->reunion->count() }}</span></td>
-                                                    {{-- <td class="client-status text-center">
-                                                        <span class="label {{ $t->date_fin> now()?"label-primary":"label-danger" }}">Date {{ $t->date_fin> now()?$t->date_debut :"La réunion est déjà passée"}}</span>
-                                                    </td> --}}
-                                                    <td class="client-status text-center">
-                                                    <a href="{{ route('viewListeReunion',['id'=>$t->id]) }}"
-                                                    class="btn btn-xs btn-outline btn-primary">Détail sur réunions participée</a>
-                                                    </td>
+                                                        <td>{{ $t->phone }}</td>
+                                                        <td>{{ $t->email }}</td>
+                                                        <td><span class="label label-info">Réunion(s) : {{
+                                                                $t->reunion->count() }}</span></td>
+                                                        {{-- <td class="client-status text-center">
+                                                            <span class="label {{ $t->date_fin> now()?"
+                                                                label-primary":"label-danger" }}">Date {{ $t->date_fin>
+                                                                now()?$t->date_debut :"La réunion est déjà
+                                                                passée"}}</span>
+                                                        </td> --}}
+                                                        <td class="client-status text-center">
+                                                            <a href="{{ route('viewListeReunion',['id'=>$t->id]) }}"
+                                                                class="btn btn-xs btn-outline btn-primary">Détail sur
+                                                                réunions participée</a>
+                                                        </td>
 
-                                                </tr>
-                                              @empty
-                                                   <span class="label label-danger">Aucune reunion en vue</span>
-                                              @endforelse
+                                                    </tr>
+                                                    @empty
+                                                    <span class="label label-danger">Aucune reunion en vue</span>
+                                                    @endforelse
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -284,7 +347,6 @@
     <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/js/dataTables/datatables.min.js') }}"></script>
     <script>
-
         $(document).ready(function () {
             $('.dataTables-example').DataTable({
                 language: {

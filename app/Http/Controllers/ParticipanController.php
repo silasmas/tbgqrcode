@@ -75,17 +75,23 @@ class ParticipanController extends Controller
     public function verify($id)
     {
         $id = explode('.', $id);
-        $reu = reunion::where([['id', $id[1]], ['status', 'Ouvert'], ['date_fin', ">", NOW()]])->first();
+        $reu = reunion::where([['id', $id[1]], ['date_fin', ">", NOW()]])->first();
         // dd($reu);
         if (!$reu) {
             return response([
                 "success" => false,
+                "reponse" => 0,
                 "message" => "Cette réunion n'est plus actuelle, ce QRCODE n'est plus valide",
             ], 401);
-        } else {
-
+        } if ($reu->status=="En attente") {
+            return response([
+                "success" => false,
+                "reponse" => 4,
+                "message" => "Cette réunion est en attente,merci de bien garder ce QRCODE pour y avoir accès",
+            ], 200);
+        }else {
             $retour = reunionParticipan::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["status", "Valide"]])->first();
-            // dd($retour);
+
             if ($retour) {
                 $p = presence::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["etat", "present"]])->first();
                 if ($p) {
@@ -95,6 +101,7 @@ class ParticipanController extends Controller
                     $msg = $participant->prenom . "-" . $participant->nom . " a déjà eu accès la conférence $reunion->titre";
                     return response([
                         "success" => true,
+                        "reponse" => 1,
                         "message" => $msg,
                         "participant" => $participant,
                         "reunion" => $reunion,
@@ -110,6 +117,7 @@ class ParticipanController extends Controller
                     $msg = $participant->prenom . "-" . $participant->nom . " Accès accordé à la réunion $reunion->titre";
                     return response([
                         "success" => true,
+                        "reponse" => 2,
                         "message" => $msg,
                         "participant" => $participant,
                         "reunion" => $reunion,
@@ -118,6 +126,7 @@ class ParticipanController extends Controller
             } else {
                 return response([
                     "success" => false,
+                    "reponse" => 3,
                     "message" => "Cette personne n'est pas trouvée dans la liste des participant de cette réunion",
                 ], 401);
             }
