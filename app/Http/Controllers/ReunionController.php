@@ -116,7 +116,7 @@ class ReunionController extends Controller
         $image = QrCode::size(150)->format("png")
             ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.2, true)
             ->generate("$data");
-        return view("qrcode", compact($image));
+        return view("qrcode", compact("image"));
         //echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
     }
 

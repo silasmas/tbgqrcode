@@ -15,7 +15,7 @@
     <div class="row m-t-lg">
         <div class="col-lg-12">
 
-             <img src="data:image/png;base64,{{ base64_encode($image) }}" alt="QR Code" />
+            <img src="data:image/png;base64,{{ base64_encode($image) }}" alt="QR Code" />
         </div>
     </div>
 </div>
