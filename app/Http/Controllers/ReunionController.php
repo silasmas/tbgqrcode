@@ -7,6 +7,7 @@ use App\Models\presence;
 use App\Models\reunion;
 use App\Models\reunionParticipan;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReunionController extends Controller
 {
@@ -154,11 +155,11 @@ class ReunionController extends Controller
         // // Validate the result
         // $writer->validateResult($result, 'Life is too short to be generating QR codes');
 
-        // $image = QrCode::size(150)->format("png")
-        //     ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.2, true)
-        //     ->padd(255, 255, 255)
-        //     ->backgroundColor(255, 255, 255)
-        //     ->generate("$data");
+        $image = QrCode::size(150)->format("png")
+            ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.2, true)
+            ->padd(255, 255, 255)
+            ->backgroundColor(255, 255, 255)
+            ->generate("$data");
 
         //echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
         // dd($image);
