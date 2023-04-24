@@ -12,7 +12,7 @@
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeIn">
-    <div class="row m-t-lg">
+    <div class="row m-t-lg" style="margin-left:100px">
         <div class="col-12">
             <img src="data:image/png;base64, {{ base64_encode($image) }} " alt="QR Code" style="margin: 0 auto;" />
         </div>
