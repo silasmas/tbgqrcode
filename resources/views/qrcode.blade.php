@@ -14,7 +14,7 @@
 <div class="wrapper wrapper-content animated fadeIn">
     <div class="row m-t-lg">
         <div class="col-lg-4 mx-auto">
-            <div class="card bg-white">
+            <div class="card white-bg">
                 <div class="card-body">
                     <img src="data:image/png;base64,{{ base64_encode($image) }}" alt="QR Code" />
                 </div>
