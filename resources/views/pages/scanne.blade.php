@@ -12,8 +12,6 @@
 
 @section('content')
 <div class="wrapper wrapper-content animated fadeIn">
-    <div class="row m-t-lg">
-        <div class="col-lg-6 col-lg-offset-3">
             <div class="middle-box text-center animated fadeInDown">
                 <h1>500</h1>
                 <h3 class="font-bold">Internal Server Error</h3>
@@ -23,8 +21,6 @@
                     You can go back to main page: <br/><a href="index.html" class="btn btn-primary m-t">Dashboard</a>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
     @endsection
     @section('autres-script')
