@@ -83,30 +83,69 @@ class ReunionController extends Controller
     public function verify($id)
     {
         $id = explode('.', $id);
-        $retour = reunionParticipan::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["status", "Valide"]])->first();
-        // dd($retour);
-        if ($retour) {
-            $p = presence::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["etat", "present"]])->first();
-            if ($p) {
-
-                $participant = participan::find($id[0]);
-                $reunion = reunion::find($id[1]);
-                $msg = "A déjà eu accès la conférence $reunion->titre";
-                return view("pages/scanne", compact("participant", "reunion", "msg"));
-            } else {
-                presence::create([
-                    'jour' => NOW(),
-                    'participan_id' => $id[0],
-                    'reunion_id' => $id[1],
-                ]);
-                $participant = participan::find($id[0]);
-                $reunion = reunion::find($id[1]);
-                $msg = "Accès accordé à la réunion $reunion->titre";
-                return view("pages/scanne", compact("participant", "reunion", "msg"));
-            }
+        $reu = reunion::where([['id', $id[1]], ['date_fin', ">", NOW()]])->first();
+        // dd($reu);
+        if (!$reu) {
+            $rep = false;
+            $msg = "Cette réunion n'est plus actuelle, ce QRCODE n'est plus valide";
+            return view("pages/scanne", compact("msg", 'rep'));
+        }if ($reu->status == "En attente") {
+            $rep = false;
+            $msg = "Cette réunion est en attente,merci de bien garder ce QRCODE pour y avoir accès";
+            return view("pages/scanne", compact("msg", "rep"));
         } else {
-            dd($retour);
+            $retour = reunionParticipan::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["status", "Valide"]])->first();
+
+            if ($retour) {
+                $p = presence::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["etat", "present"]])->first();
+                if ($p) {
+                    $participant = participan::find($id[0]);
+                    $reunion = reunion::find($id[1]);
+                    $msg = $participant->prenom . "-" . $participant->nom . " a déjà eu accès la conférence $reunion->titre";
+
+                    return view("pages/scanne", compact("participant", "reunion", "msg"));
+                } else {
+                    presence::create([
+                        'jour' => NOW(),
+                        'participan_id' => $id[0],
+                        'reunion_id' => $id[1],
+                    ]);
+                    $participant = participan::find($id[0]);
+                    $reunion = reunion::find($id[1]);
+                    $msg = $participant->prenom . "-" . $participant->nom . " Accès accordé à la réunion $reunion->titre";
+
+                    return view("pages/scanne", compact("participant", "reunion", "msg"));
+                }
+            } else {
+                $rep = false;
+                $msg = "Cette personne n'est pas trouvée dans la liste des participant de cette réunion";
+                return view("pages/scanne", compact("msg", "rep"));
+            }
         }
+        // $retour = reunionParticipan::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["status", "Valide"]])->first();
+        // // dd($retour);
+        // if ($retour) {
+        //     $p = presence::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["etat", "present"]])->first();
+        //     if ($p) {
+
+        //         $participant = participan::find($id[0]);
+        //         $reunion = reunion::find($id[1]);
+        //         $msg = "A déjà eu accès la conférence $reunion->titre";
+        //         return view("pages/scanne", compact("participant", "reunion", "msg"));
+        //     } else {
+        //         presence::create([
+        //             'jour' => NOW(),
+        //             'participan_id' => $id[0],
+        //             'reunion_id' => $id[1],
+        //         ]);
+        //         $participant = participan::find($id[0]);
+        //         $reunion = reunion::find($id[1]);
+        //         $msg = "Accès accordé à la réunion $reunion->titre";
+        //         return view("pages/scanne", compact("participant", "reunion", "msg"));
+        //     }
+        // } else {
+
+        // }
 
     }
     /**
