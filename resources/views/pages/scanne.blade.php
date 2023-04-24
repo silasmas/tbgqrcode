@@ -13,11 +13,17 @@
 @section('content')
 {{-- <div class="wrapper wrapper-content animated fadeIn"> --}}
             <div class="middle-box text-center animated fadeInDown">
-                <h1>{{ $rep==true?"Réussi":"Echec" }}</h1>
-                <h3 class="font-bold"></h3>
+                <h1 style="font-size: 100px !important">{{ $rep==true?"Réussi":"Echec" }}</h1>
+                <h3 class="font-bold">{{ isset($reunion)?" ".$reunion->titre:"" }}</h3>
                 <div class="error-desc">
                     {{ $msg }} <br/>
-                    <a href="index.html" class="btn btn-primary m-t">OK</a>
+                    <span class="btn btn-{{ $rep==true?"success":"danger"  }}  m-t">
+                        @if ($rep)
+                        <i class="fa fa-check-square-o"></i>
+                        @else
+                        <i class="fa fa-times"></i>
+                        @endif
+                    </span>
                 </div>
             </div>
 {{-- </div> --}}
