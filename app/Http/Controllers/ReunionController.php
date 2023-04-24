@@ -29,7 +29,7 @@ class ReunionController extends Controller
             ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.2, true)
             ->backgroundColor(255, 255, 255);
 
-        return view("pages/liste", compact("liste"));
+        return view("pages/liste", compact("liste", "image"));
     }
     public function viewListeReunion($id)
     {
