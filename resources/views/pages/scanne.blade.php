@@ -1,4 +1,4 @@
-@extends('layouts.tamplate',['titre'=>"Marquer la présence"])
+@extends('layouts.tamplate',['titre'=>"Page de vérification"])
 @section('autres_style')
 <link href="{{asset('assets/css/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/chosen/bootstrap-chosen.css') }}">
@@ -17,13 +17,34 @@
                 <h3 class="font-bold">{{ isset($reunion)?" ".$reunion->titre:"" }}</h3>
                 <div class="error-desc">
                     {{ $msg }} <br/>
-                    <span class="btn btn-{{ $rep==true?"success":"danger"  }}  m-t">
-                        @if ($rep)
-                        <i class="fa fa-check-square-o"></i>
-                        @else
-                        <i class="fa fa-times"></i>
-                        @endif
-                    </span>
+                    @switch($number)
+                        @case(0)
+                        <span class="btn btn-danger  m-t">
+                            <i class="fa fa-times"></i>
+                        </span>
+                            @break
+                        @case(1)
+                        <span class="btn btn-warning  m-t">
+                            <i class="fa fa-warning"></i>
+                        </span>
+                            @break
+                        @case(2)
+                        <span class="btn btn-info  m-t">
+                            <i class="fa fa-warning"></i>
+                        </span>
+                            @break
+                        @case(3)
+                        <span class="btn btn-success m-t">
+                            <i class="fa fa-check-square-o"></i>
+                        </span>
+                            @break
+                        @case(4)
+                        <span class="btn btn-danger  m-t">
+                            <i class="fa fa-times"></i>
+                        </span>
+                            @break
+                    @endswitch
+
                 </div>
             </div>
 {{-- </div> --}}
