@@ -14,10 +14,10 @@
 <div class="wrapper wrapper-content animated fadeIn">
     <div class="row m-t-lg">
         <div class="col-12">
-            <img src="{{$image}}" alt="QR Code" style="margin: 0 auto;" />
+            <img src="data:image/png;base64, {{ base64_encode($image) }} " alt="QR Code" style="margin: 0 auto;" />
         </div>
         <div class="col-12">
-            <div> <a href="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->generate('Generate any QR Code!')) !!} " download>Downloads</a></div>
+            <div> <a href="data:image/png;base64,{{ base64_encode($image) }}" download>Downloads</a></div>
         </div>
     </div>
 </div>
