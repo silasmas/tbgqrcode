@@ -25,6 +25,9 @@ class ReunionController extends Controller
     public function viewListe($id)
     {
         $liste = reunion::with("participan")->where('id', $id)->first();
+        $image = QrCode::size(150)->format("png")
+            ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.2, true)
+            ->backgroundColor(255, 255, 255);
 
         return view("pages/liste", compact("liste"));
     }
@@ -160,7 +163,7 @@ class ReunionController extends Controller
             ->backgroundColor(255, 255, 255)
             ->generate("$data");
 
-        //echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
+        // '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
         // dd($image);
         return view("qrcode", compact("image"));
     }

@@ -79,12 +79,14 @@
                                 <a href="https://api.whatsapp.com/send?phone={{$i->phone}}&text={{$msg}}&source&data="
                                     target="_blank" alt='envoyer le QRCODE par whatsapp'
                                     class="btn btn-outline btn-primary dim">
+
                                     <i class="fa fa-whatsapp"></i>
                                     <i class="fa fa-qrcode"></i>
                                 </a>
-                                <a href="{{ route('viewQrcode',["id"=>$i->id.".".$liste->id]) }}" target="_blank"
+                                {{-- <a href="{{ route('viewQrcode',["id"=>$i->id.".".$liste->id]) }}" target="_blank"
                                     id="deleteCat" alt='envoyer le QRCODE par mail'
-                                    class="btn btn-outline btn-danger dim">
+                                    class="btn btn-outline btn-danger dim"> --}}
+                                    <a href="data:image/png;base64,{{ base64_encode($image->generate("https://tbg.silasmas.com/verify/$i->id.$liste->id")) }}" download class="btn btn-outline btn-danger dim">
                                     <i class="fa fa-download"></i>
                                     <i class="fa fa-qrcode"></i>
                                 </a>
