@@ -13,12 +13,11 @@
 @section('content')
 {{-- <div class="wrapper wrapper-content animated fadeIn"> --}}
             <div class="middle-box text-center animated fadeInDown">
-                <h1>500</h1>
-                <h3 class="font-bold">Internal Server Error</h3>
+                <h1>{{ $rep==true?"Réussi":"Echec" }}</h1>
+                <h3 class="font-bold"></h3>
                 <div class="error-desc">
-                    The server encountered something unexpected that didn't allow it to complete the request. We apologize.<br/>
-                    You can go back to main page: <br/>
-                    <a href="index.html" class="btn btn-primary m-t">Dashboard</a>
+                    {{ $msg }} <br/>
+                    <a href="index.html" class="btn btn-primary m-t">OK</a>
                 </div>
             </div>
 {{-- </div> --}}
@@ -35,19 +34,5 @@
 
     <script src="{{ asset('assets/js/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
-    <script type="text/javascript">
-        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-        scanner.addListener('scan', function (content) {
-          console.log(content);
-        });
-        Instascan.Camera.getCameras().then(function (cameras) {
-          if (cameras.length > 0) {
-            scanner.start(cameras[0]);
-          } else {
-            console.error('No cameras found.');
-          }
-        }).catch(function (e) {
-          console.error(e);
-        });
-      </script>
+
     @endsection
