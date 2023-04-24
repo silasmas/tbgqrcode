@@ -13,7 +13,7 @@
 @section('content')
 {{-- <div class="wrapper wrapper-content animated fadeIn"> --}}
             <div class="middle-box text-center animated fadeInDown">
-                <h1 style="font-size: 100px !important">{{ $rep==true?"":"Réussi" }}</h1>
+                <h1 style="font-size: 80px !important">{{ $rep==true?"":"Réussi" }}</h1>
                 <h3 class="font-bold">{{ isset($reunion)?" ".$reunion->titre:"" }}</h3>
                 <div class="error-desc">
                     {{ $msg }} <br/>
