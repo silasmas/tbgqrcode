@@ -7,7 +7,6 @@ use App\Models\presence;
 use App\Models\reunion;
 use App\Models\reunionParticipan;
 use Illuminate\Http\Request;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReunionController extends Controller
 {
@@ -113,12 +112,57 @@ class ReunionController extends Controller
     {
 
         $data = "https://tbg.silasmas.com/verify/" . $id;
-        $image = QrCode::size(150)->format("png")
-            ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.2, true)
-            ->backgroundColor(255, 255, 255)
-            ->generate("$data");
-        return view("qrcode", compact("image"));
+        // $image = Builder::create()
+        //     ->writer(new PngWriter())
+        //     ->writerOptions([])
+        //     ->data($data)
+        //     ->encoding(new Encoding('UTF-8'))
+        //     ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+        //     ->size(300)
+        //     ->margin(10)
+        //     ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+        // // ->logoPath("https://tbg.silasmas.com/public/assets/img/logo.jpg")
+        //     ->logoPath(public_path() . '/assets/img/logo.png')
+        //     ->labelText('This is the label')
+        //     ->labelFont(new NotoSans(20))
+        //     ->labelAlignment(new LabelAlignmentCenter())
+        //     ->validateResult(false)
+        //     ->build();
+
+        // $writer = new PngWriter();
+
+        // // Create QR code
+        // $qrCode = QrCode::create('Life is too short to be generating QR codes')
+        //     ->setEncoding(new Encoding('UTF-8'))
+        //     ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+        //     ->setSize(300)
+        //     ->setMargin(10)
+        //     ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+        //     ->setForegroundColor(new Color(0, 0, 0))
+        //     ->setBackgroundColor(new Color(255, 255, 255));
+
+        // // Create generic logo
+        // $logo = Logo::create(__DIR__.'/assets/symfony.png')
+        //     ->setResizeToWidth(50);
+
+        // // Create generic label
+        // $label = Label::create('Label')
+        //     ->setTextColor(new Color(255, 0, 0));
+
+        // $result = $writer->write($qrCode, $logo, $label);
+
+        // // Validate the result
+        // $writer->validateResult($result, 'Life is too short to be generating QR codes');
+
+        // $image = QrCode::size(150)->format("png")
+        //     ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.2, true)
+        //     ->padd(255, 255, 255)
+        //     ->backgroundColor(255, 255, 255)
+        //     ->generate("$data");
+
         //echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
+        // dd($image);
+        return view("qrcode", compact("image"));
     }
 
     /**
