@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdatereunionRequest;
 use App\Models\participan;
 use App\Models\presence;
 use App\Models\reunion;
@@ -117,7 +116,8 @@ class ReunionController extends Controller
         $image = QrCode::size(150)->format("png")
             ->merge('https://tbg.silasmas.com/public/assets/img/logo.jpg', 0.2, true)
             ->generate("$data");
-        echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
+        return view("qrcode", compact($image));
+        //echo '<img src="data:image/png;base64,' . base64_encode($image) . '" alt="QR Code" />';
     }
 
     /**
@@ -130,7 +130,7 @@ class ReunionController extends Controller
         $reunions = reunion::with("participan")->get();
         $participan = participan::with("reunion")->get();
 
-        return view("pages/reunion", compact("categorie","reunions", "freunions", "participan"));
+        return view("pages/reunion", compact("categorie", "reunions", "freunions", "participan"));
 
     }
 
@@ -139,33 +139,33 @@ class ReunionController extends Controller
      */
     public function update(Request $request)
     {
-        $reunion=reunion::find($request->id);
+        $reunion = reunion::find($request->id);
         if ($reunion) {
             $file = $request->file('image');
-            if ($file!="") {
+            if ($file != "") {
                 $photo = public_path() . '/storage/' . $reunion->image;
                 file_exists($photo) ? unlink($photo) : '';
             }
-            $file == '' ? "": ($filenameImg = 'reunion/' . time() . '.' . $file->getClientOriginalName());
-            $file == '' ?  "" : $file->move('storage/reunion', $filenameImg);
+            $file == '' ? "" : ($filenameImg = 'reunion/' . time() . '.' . $file->getClientOriginalName());
+            $file == '' ? "" : $file->move('storage/reunion', $filenameImg);
             $reunion->update([
-            'titre'=>$request->titre,
-            'subtitre' =>$request->subtitre,
-            'titre'=> $request->titre,
-            'type' => $request->type,
-            'context' => $request->contexte,
-            'date_debut' => $request->date_debut,
-            'date_fin' => $request->date_fin,
-            'quota' => $request->quota,
-            'status' => $request->status,
-            'image' => isset($filenameImg)?$filenameImg:$reunion->image,
+                'titre' => $request->titre,
+                'subtitre' => $request->subtitre,
+                'titre' => $request->titre,
+                'type' => $request->type,
+                'context' => $request->contexte,
+                'date_debut' => $request->date_debut,
+                'date_fin' => $request->date_fin,
+                'quota' => $request->quota,
+                'status' => $request->status,
+                'image' => isset($filenameImg) ? $filenameImg : $reunion->image,
             ]);
             $freunions = reunion::where([["status", "Ouvert"], ["date_fin", ">", now()]])->with("participan")->get();
             $reunions = reunion::with("participan")->get();
             $participan = participan::with("reunion")->get();
 
             return redirect("reunion")
-            ->with(['message' => 'La modification est faite avec succès', "type" => "success"]);
+                ->with(['message' => 'La modification est faite avec succès', "type" => "success"]);
 
         } else {
             return back()->with(['message' => 'Erreur de modification', "type" => "danger"]);
