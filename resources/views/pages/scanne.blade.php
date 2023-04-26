@@ -17,28 +17,28 @@
                 <h3 class="font-bold">{{ isset($reunion)?" ".$reunion->titre:"" }}</h3>
                 <div class="error-desc">
                     {{ $msg }} <br/>
-                    {{-- @switch($number) --}}
-                        @case("0")
+                    @switch($number)
+                        @case(0)
                         <span class="btn btn-danger  m-t">
                             <i class="fa fa-times"></i>
                         </span>
                             @break
-                        @case("1")
+                        @case(1)
                         <span class="btn btn-warning  m-t">
                             <i class="fa fa-warning"></i>
                         </span>
                             @break
-                        @case("2")
+                        @case(2)
                         <span class="btn btn-info  m-t">
                             <i class="fa fa-warning"></i>
                         </span>
                             @break
-                        @case("3")
+                        @case(3)
                         <span class="btn btn-success m-t">
                             <i class="fa fa-check-square-o"></i>
                         </span>
                             @break
-                        @case("4")
+                        @case(4)
                         <span class="btn btn-danger  m-t">
                             <i class="fa fa-times"></i>
                         </span>
