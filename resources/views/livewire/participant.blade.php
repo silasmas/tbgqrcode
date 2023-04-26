@@ -58,7 +58,7 @@
 
                 </div>
                 <br>
-                @if (session()->has('qrcode')!="")
+                {{-- @if (session()->has('qrcode')!="")
                         <div class="col-lg-offset-3 col-lg-6 col-sm-12 form-group">
                             <div class="col-sm-offset-4 col-sm-5">
                                 <a href="{{ route('viewQrcode',["id"=>session()->get('qrcode')]) }}" target="_blank"
@@ -67,7 +67,7 @@
                             </div>
 
                         </div>
-                        @endif
+                        @endif --}}
         </div>
     </form>
     <br> <br>
