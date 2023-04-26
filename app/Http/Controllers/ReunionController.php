@@ -118,7 +118,7 @@ class ReunionController extends Controller
                     $reunion = reunion::find($id[1]);
                     $msg = $participant->prenom . "-" . $participant->nom . " Accès accordé à la réunion $reunion->titre";
                     $number = 3;
-                    return view("pages/scanne", compact("participant", "reunion", "msg", "number", "true"));
+                    return view("pages/scanne", compact("participant", "reunion", "msg", "number", "rep"));
                 }
             } else {
                 $rep = false;
