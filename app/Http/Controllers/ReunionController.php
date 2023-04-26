@@ -101,22 +101,24 @@ class ReunionController extends Controller
             if ($retour) {
                 $p = presence::where([["participan_id", $id[0]], ["reunion_id", $id[1]], ["etat", "present"]])->first();
                 if ($p) {
+                    $rep = true;
                     $participant = participan::find($id[0]);
                     $reunion = reunion::find($id[1]);
                     $msg = $participant->prenom . "-" . $participant->nom . " a déjà eu accès la conférence $reunion->titre";
                     $number = 2;
-                    return view("pages/scanne", compact("participant", "reunion", "msg", "number"));
+                    return view("pages/scanne", compact("participant", "reunion", "msg", "number", "rep"));
                 } else {
                     presence::create([
                         'jour' => NOW(),
                         'participan_id' => $id[0],
                         'reunion_id' => $id[1],
                     ]);
+                    $rep = true;
                     $participant = participan::find($id[0]);
                     $reunion = reunion::find($id[1]);
                     $msg = $participant->prenom . "-" . $participant->nom . " Accès accordé à la réunion $reunion->titre";
                     $number = 3;
-                    return view("pages/scanne", compact("participant", "reunion", "msg", "number"));
+                    return view("pages/scanne", compact("participant", "reunion", "msg", "number", "true"));
                 }
             } else {
                 $rep = false;
