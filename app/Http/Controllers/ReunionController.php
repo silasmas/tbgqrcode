@@ -159,7 +159,7 @@ class ReunionController extends Controller
     public function show($id)
     {
 
-        $data = "https://tbg.silasmas.com/verify/" . $id;
+        $data = "https://qrcode.thebestgroup.org/verify/" . $id;
         // $image = Builder::create()
         //     ->writer(new PngWriter())
         //     ->writerOptions([])
